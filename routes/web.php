@@ -45,6 +45,7 @@ Route::prefix('business')->middleware(['auth'])->name('business.')->group(functi
     ///creazione dipendenti
     Route::get('/{businessName}/create', [BusinessController::class,'create'])->name('create');
     Route::post('/{businessId}/store', [BusinessController::class, 'store'])->name('store');
+    Route::delete('/{businessId}/delete/{user}', [BusinessController::class, 'destroy'])->name('delete');
 
 });
 

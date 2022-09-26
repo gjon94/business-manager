@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Business;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -75,9 +76,14 @@ class BusinessPolicy
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Business $business)
+    public function delete(User $user, Business $business,Employee $employee)
     {
-        //
+        
+        if($user->id === $business->user_id && $business->id === $employee->business_id){
+            return true;
+        }
+        
+        return false;
     }
 
     /**
@@ -89,7 +95,7 @@ class BusinessPolicy
      */
     public function restore(User $user, Business $business)
     {
-        //
+        
     }
 
     /**
