@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Business;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class BusinessController extends Controller
 {
@@ -13,10 +14,13 @@ class BusinessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($businessName)
+    public function index(Request $request,$businessName)
     {
         
         $business = Business::findOrFail($businessName);
+       
+        $this->authorize('viewAny', $business);
+
         $employees = $business->employees;
         
         return view('business.index',compact('business','employees'));
@@ -31,8 +35,14 @@ class BusinessController extends Controller
     {
         //form creazione dipendenti dalla route business
         
+        $business = Business::findOrFail($businessName);
+       
+        //controllo role/form visibile solo chi ha il permesso
+        $this->authorize('create', $business);
+
         return view('business.create',compact('businessName'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -43,6 +53,10 @@ class BusinessController extends Controller
     public function store(Request $request, $businessId)
     {
         // invio dati utente per registrare
+        $business = Business::findOrFail($businessId);
+
+        $this->authorize('create', $business);
+
         $employee = new Employee;
         $employee->business_id = $businessId;
         $employee->role = $request->role;

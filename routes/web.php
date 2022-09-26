@@ -34,12 +34,18 @@ Route::resource('/business-manage', BusinessManageController::class);
 
 // rotta azienda, si accedera solo se admin o dipendete
 
-Route::prefix('business')->name('business.')->group(function () {
+Route::prefix('business')->middleware(['auth'])->name('business.')->group(function () {
 
-    ///creazione dipendenti
+    //proteggere con verifica legame all'azienda
+
+    
     Route::get('/{businessName}', [BusinessController::class,'index'])->name('index');
+
+    //proteggere con ruolo nellazienda
+    ///creazione dipendenti
     Route::get('/{businessName}/create', [BusinessController::class,'create'])->name('create');
     Route::post('/{businessId}/store', [BusinessController::class, 'store'])->name('store');
+
 });
 
 require __DIR__.'/auth.php';
