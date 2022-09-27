@@ -36,7 +36,12 @@ class BusinessPolicy
      */
     public function view(User $user, Business $business)
     {
-        
+       
+        ///show
+        if($user->id === $business->user_id){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -66,7 +71,11 @@ class BusinessPolicy
      */
     public function update(User $user, Business $business)
     {
+        if($user->id === $business->user_id){
+            return true;
+        }
         
+        return false;
     }
 
     /**

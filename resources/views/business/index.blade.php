@@ -26,7 +26,11 @@
                         </th>
 
                         <th scope="col" class="py-3 px-6">
-                            azione
+                            licenzia
+                        </th>
+
+                        <th scope="col" class="py-3 px-6">
+                            modifica
                         </th>
                     
                     </tr>
@@ -36,7 +40,7 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
        
                         <td class="py-4 px-6">
-                            {{$employee->name}}
+                           <a href="{{route('business.show',[$business->id,$employee->id])}}">{{$employee->name}}</a> 
                         </td>
 
                         <td class="py-4 px-6">
@@ -45,6 +49,10 @@
                                 @method('delete')
                                 <button type="submit">licenzia</button>
                             </form>
+                        </td>
+
+                        <td>
+                            <a href="{{route('business.edit',[$business->id,$employee->id])}}"><button>modifica</button></a> 
                         </td>
                         
                     </tr>

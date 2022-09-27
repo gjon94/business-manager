@@ -75,12 +75,16 @@ class BusinessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($businessId, $employeeId)
     {
+        $employee = Employee::findOrFail($employeeId);
+        $business = Business::findOrFail($businessId);
 
-        // $business = Business::findOrFail($id);
-        // $employees = null;
-        // return view('business.show',compact('business','employees'));
+        
+         $this->authorize('view',$business);
+
+         return view('employee.index',compact(['employee','business']));
+
     }
 
     /**
@@ -89,9 +93,15 @@ class BusinessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($businessId, $employeeId)
     {
-        //
+        $business = Business::findOrFail($businessId);
+        $employee = Employee::findOrFail($employeeId);
+
+        
+        return view('employee.editForm',compact('employee','businessId'));
+
+
     }
 
     /**
@@ -101,9 +111,19 @@ class BusinessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $businessId,$employeeId)
     {
-        //
+        $business = Business::findOrFail($businessId);
+
+        $this->authorize('update',$business);
+        
+        $employee = Employee::findOrFail($employeeId);
+        $employee->name = $request->name;
+        $employee->surname = $request->surname;
+        $employee->save();
+
+        return redirect(route('business.index',$businessId));
+
     }
 
     /**
@@ -115,6 +135,8 @@ class BusinessController extends Controller
     public function destroy($businessId, $employeeId)
     {
        $business = Business::findOrFail($businessId);
+
+       
        $employee = Employee::findOrFail($employeeId);
        
        $this->authorize('delete',[$business, $employee]);
