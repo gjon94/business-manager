@@ -13,9 +13,14 @@
 
     <h5>lista dipendenti</h5>
     
-        
+    @if(session()->has('success_mess'))
+    <div class="alert alert-success">
+        {{ session()->get('success_mess') }}
+    </div>
+@endif
    
          <!-- table employees -->
+   
 
          <div class="overflow-x-auto relative w-1/2 m-auto">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

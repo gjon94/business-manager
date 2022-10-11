@@ -39,13 +39,13 @@ Route::prefix('business')->middleware(['auth'])->name('business.')->group(functi
     //proteggere con verifica legame all'azienda
 
     
-    Route::get('/{businessName}', [BusinessController::class,'index'])->name('index');
+    Route::get('/{businessId}', [BusinessController::class,'index'])->name('index');
 
     //proteggere con ruolo nellazienda
 
     ///manage employees
     Route::get('/{businessId}/employees/{employeeId}',[BusinessController::class,'show'])->name('show');
-    Route::get('/{businessName}/create', [BusinessController::class,'create'])->name('create');
+    Route::get('/{businessId}/create', [BusinessController::class,'create'])->name('create');
     Route::post('/{businessId}/store', [BusinessController::class, 'store'])->name('store');
     Route::delete('/{businessId}/delete/{user}', [BusinessController::class, 'destroy'])->name('delete');
     Route::get('/{businessId}/edit/{user}',[BusinessController::class, 'edit'])->name('edit');

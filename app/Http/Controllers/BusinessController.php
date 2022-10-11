@@ -6,6 +6,8 @@ use App\Models\Business;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class BusinessController extends Controller
 {
@@ -14,10 +16,10 @@ class BusinessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,$businessName)
+    public function index(Request $request,$businessId)
     {
         
-        $business = Business::findOrFail($businessName);
+        $business = Business::findOrFail($businessId);
        
         $this->authorize('viewAny', $business);
 
@@ -31,16 +33,16 @@ class BusinessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($businessName)
+    public function create($businessId)
     {
         //form creazione dipendenti dalla route business
         
-        $business = Business::findOrFail($businessName);
+        $business = Business::findOrFail($businessId);
        
         //controllo role/form visibile solo chi ha il permesso
         $this->authorize('create', $business);
 
-        return view('business.create',compact('businessName'));
+        return view('business.create',compact('business'));
     }
 
 
@@ -53,20 +55,25 @@ class BusinessController extends Controller
     public function store(Request $request, $businessId)
     {
         // invio dati utente per registrare
+        
         $business = Business::findOrFail($businessId);
 
         $this->authorize('create', $business);
 
+        $password = Str::random(10);
+
         $employee = new Employee;
         $employee->business_id = $businessId;
+        $employee->password = Hash::make($password);
         $employee->role = $request->role;
         $employee->name = $request->name;
         $employee->surname = $request->surname;
         $employee->dateOfBirth = $request->dateOfBirth;
         $employee->save();
 
+
        
-        return redirect(route('business.index',['businessName'=>$businessId]));
+        return redirect(route('business.index',['businessId'=>$businessId]))->with(['success_mess'=>$password]);
     }
 
     /**
@@ -83,7 +90,7 @@ class BusinessController extends Controller
         
          $this->authorize('view',$business);
 
-         return view('employee.index',compact(['employee','business']));
+         return view('business.employee.profile',compact(['employee','business']));
 
     }
 
@@ -99,7 +106,7 @@ class BusinessController extends Controller
         $employee = Employee::findOrFail($employeeId);
 
         
-        return view('employee.editForm',compact('employee','businessId'));
+        return view('business.employee.editForm',compact('employee','businessId'));
 
 
     }
