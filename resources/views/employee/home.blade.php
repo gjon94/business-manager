@@ -1,0 +1,1 @@
+<h1>{{auth('employee')->user()->name}}</h1>

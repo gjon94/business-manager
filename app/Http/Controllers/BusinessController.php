@@ -60,7 +60,8 @@ class BusinessController extends Controller
 
         $this->authorize('create', $business);
 
-        $password = Str::random(10);
+        // $password = Str::random(10);
+        $password = "password";
 
         $employee = new Employee;
         $employee->business_id = $businessId;

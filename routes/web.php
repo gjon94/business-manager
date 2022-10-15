@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthEmployee\LoginEmployee;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\BusinessManageController;
+use App\Http\Controllers\EmployeeController;
 use App\Models\Business;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +22,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 
     return view('welcome');
-    
 });
 
 Route::get('/dashboard', function () {
@@ -38,19 +39,27 @@ Route::prefix('business')->middleware(['auth'])->name('business.')->group(functi
 
     //proteggere con verifica legame all'azienda
 
-    
-    Route::get('/{businessId}', [BusinessController::class,'index'])->name('index');
+
+    Route::get('/{businessId}', [BusinessController::class, 'index'])->name('index');
 
     //proteggere con ruolo nellazienda
 
     ///manage employees
-    Route::get('/{businessId}/employees/{employeeId}',[BusinessController::class,'show'])->name('show');
-    Route::get('/{businessId}/create', [BusinessController::class,'create'])->name('create');
+    Route::get('/{businessId}/employees/{employeeId}', [BusinessController::class, 'show'])->name('show');
+    Route::get('/{businessId}/create', [BusinessController::class, 'create'])->name('create');
     Route::post('/{businessId}/store', [BusinessController::class, 'store'])->name('store');
     Route::delete('/{businessId}/delete/{user}', [BusinessController::class, 'destroy'])->name('delete');
-    Route::get('/{businessId}/edit/{user}',[BusinessController::class, 'edit'])->name('edit');
+    Route::get('/{businessId}/edit/{user}', [BusinessController::class, 'edit'])->name('edit');
     Route::patch('/{businessId}/update/{employeeId}', [BusinessController::class, 'update'])->name('update');
-
 });
 
-require __DIR__.'/auth.php';
+
+
+Route::prefix('employee')->name('employee.')->group(function () {
+
+    Route::get('/', [EmployeeController::class, 'index'])->name('index');
+    Route::get('/login', [LoginEmployee::class, 'create'])->name('show');
+    Route::post('/loginPost', [LoginEmployee::class, 'store'])->name('store');
+});
+
+require __DIR__ . '/auth.php';
