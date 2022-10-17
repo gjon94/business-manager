@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -28,11 +30,11 @@ class LoginRequest extends FormRequest
      */
     public function rules()
     {
-        
+
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
-            
+
         ];
     }
 
@@ -46,11 +48,11 @@ class LoginRequest extends FormRequest
     public function authenticate()
     {
         Auth::guard('employee')->logout();
-        
+
 
         $this->ensureIsNotRateLimited('email');
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey('email'));
 
             throw ValidationException::withMessages([
@@ -59,17 +61,18 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey('email'));
-        
-
     }
 
     public function authenticateEmployee()
     {
-        Auth::logout();
 
+
+        Auth::logout();
+        Auth::setDefaultDriver('employee');
+        
         $this->ensureIsNotRateLimited('id');
 
-        if (! Auth::guard('employee')->attempt($this->only('id', 'password'), $this->boolean('remember'))) {
+        if (!Auth::attempt($this->only('id', 'password'), true)) {
             RateLimiter::hit($this->throttleKey('id'));
 
             throw ValidationException::withMessages([
@@ -78,6 +81,8 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey('id'));
+        
+       
         
     }
 
@@ -90,7 +95,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited($val)
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey($val), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey($val), 5)) {
             return;
         }
 
@@ -113,6 +118,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey($val)
     {
-        return Str::transliterate(Str::lower($this->input($val)).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input($val)) . '|' . $this->ip());
     }
 }

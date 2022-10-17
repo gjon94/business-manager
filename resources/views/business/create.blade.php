@@ -9,7 +9,7 @@
 <body>
 
     form creazione dipendente
-    <form action="{{route('business.store',$business)}}" method="POST">
+    <form action="{{route('business.employees.store',$business)}}" method="POST">
         @csrf
         <label for="name">nome</label>
         <input type="text" name="name">

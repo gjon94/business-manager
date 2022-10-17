@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('surname');
             $table->timestamp('dateOfBirth');
             $table->timestamps();
-
+            $table->rememberToken();
             $table->foreign('business_id')
             ->references('id')
             ->on('businesses');

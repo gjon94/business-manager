@@ -16,6 +16,7 @@ class BusinessManageController extends Controller
     public function index()
     {
         
+        
         $businessList = User::findOrFail(auth()->id())->business;
         
         return view('business-manage.index',compact('businessList'));

@@ -45,11 +45,11 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
        
                         <td class="py-4 px-6">
-                           <a href="{{route('business.show',[$business->id,$employee->id])}}">{{$employee->name}}</a> 
+                           <a href="{{route('business.employees.show',[$business->id,$employee->id])}}">{{$employee->name}}</a> 
                         </td>
 
                         <td class="py-4 px-6">
-                            <form action="{{route('business.delete',[ $business->id,$employee->id])}}" method="POST">
+                            <form action="{{route('business.employees.destroy',[ $business->id,$employee->id])}}" method="POST">
                                 @csrf
                                 @method('delete')
                                 <button type="submit">licenzia</button>
@@ -57,7 +57,7 @@
                         </td>
 
                         <td>
-                            <a href="{{route('business.edit',[$business->id,$employee->id])}}"><button>modifica</button></a> 
+                            <a href="{{route('business.employees.edit',[$business->id,$employee->id])}}"><button>modifica</button></a> 
                         </td>
                         
                     </tr>
@@ -70,6 +70,6 @@
 
         <!-- end table -->
 
-        <a href="{{route('business.create',$business->id)}}">form aGGIUNDI dipendenti</a>
+        <a href="{{route('business.employees.create',$business->id)}}">form aGGIUNDI dipendenti</a>
     </body>
 </html>

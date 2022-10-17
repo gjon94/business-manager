@@ -32,8 +32,9 @@ class LoginEmployee extends Controller
     {
         $request->authenticateEmployee();
         
-        
         $request->session()->regenerate();
+
+        
         
         return redirect('/employee');
     }

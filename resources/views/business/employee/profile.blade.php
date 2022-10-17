@@ -20,7 +20,7 @@
                 <p class="text-gray-700 text-base mb-4">
                     With supporting text below as a natural lead-in to additional content.
                 </p>
-                <form action="{{route('business.delete',[ $business->id,$employee->id])}}" method="POST">
+                <form action="{{route('business.employees.delete',[ $business->id,$employee->id])}}" method="POST">
                     @csrf
                     @method('delete')
                     <button type="submit" class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md

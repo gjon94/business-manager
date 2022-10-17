@@ -6,10 +6,13 @@ use App\Models\Business;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class BusinessPolicy
 {
     use HandlesAuthorization;
+
+
 
     /**
      * Determine whether the user can view any models.
@@ -17,9 +20,11 @@ class BusinessPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user, Business $business)
+    public function viewAny($user, Business $business)
     {
        
+    
+     
         if($user->id === $business->user_id){
             return true;
         }
@@ -36,6 +41,7 @@ class BusinessPolicy
      */
     public function view(User $user, Business $business)
     {
+     dd(auth()->user());
        
         ///show
         if($user->id === $business->user_id){

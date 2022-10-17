@@ -10,7 +10,7 @@
     <h1>le tue aziende</h1>
     @foreach ($businessList as $item)
         
-    <a href="{{route('business.index',["businessId"=>$item->id])}}">{{$item->name}}</a>
+    <a href="{{route('business.homepage',["businessId"=>$item->id])}}">{{$item->name}}</a>
             
     @endforeach
 

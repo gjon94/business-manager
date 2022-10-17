@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{route('business.update',[$businessId,$employee->id])}}" method="post">
+    <form action="{{route('business.employees.update',[$businessId,$employee->id])}}" method="post">
         @csrf 
         @method('patch')
 

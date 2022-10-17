@@ -1,1 +1,1 @@
-<h1>{{auth('employee')->user()->name}}</h1>
+<h1>benenuto nel tuo profilo, {{auth('employee')->user()->name}}</h1>
