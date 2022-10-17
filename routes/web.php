@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-
+    
     return view('welcome');
 });
 
@@ -34,38 +34,6 @@ Route::get('/dashboard', function () {
 
 Route::resource('/business-manage', BusinessManageController::class);
 
-
-// rotta azienda, si accedera solo se admin o dipendete
-
-// Route::middleware(['checkTypeOfUser'])->prefix('business')->name('business.')->group(function () {
-
-//     //proteggere con verifica legame all'azienda
-
-
-//     Route::get('/{businessId}', [BusinessController::class, 'index'])->name('index');
-//     //proteggere con ruolo nellazienda
-
-//     ///manage employees
-//     Route::get('/{businessId}/employees/{employeeId}', [BusinessController::class, 'show'])->name('show');
-//     Route::get('/{businessId}/create', [BusinessController::class, 'create'])->name('create');
-//     Route::post('/{businessId}/store', [BusinessController::class, 'store'])->name('store');
-//     Route::delete('/{businessId}/delete/{user}', [BusinessController::class, 'destroy'])->name('delete');
-//     Route::get('/{businessId}/edit/{user}', [BusinessController::class, 'edit'])->name('edit');
-//     Route::patch('/{businessId}/update/{employeeId}', [BusinessController::class, 'update'])->name('update');
-// });
-
-
-
-Route::prefix('employee')->name('employee.')->group(function () {
-
-    
-
-    Route::get('/', [EmployeeController::class, 'index'])->name('index');
-    Route::get('/login', [LoginEmployee::class, 'create'])->name('show');
-    Route::post('/loginPost', [LoginEmployee::class, 'store'])->name('store');
-});
-
-require __DIR__ . '/auth.php';
 
 
 Route::prefix('business/{businessId}')
@@ -82,11 +50,24 @@ Route::prefix('business/{businessId}')
 
     Route::resource('/employees',BusinessManageEmployeesController::class);
 
-
     //edit business info
 
     //TO-DO Route::resource('edit');
 
 });
+
+
+
+
+
+Route::prefix('employee')->name('employee.')->group(function () {
+    
+    Route::get('/', [EmployeeController::class, 'index'])->name('index');
+    Route::get('/login', [LoginEmployee::class, 'create'])->name('show');
+    Route::post('/loginPost', [LoginEmployee::class, 'store'])->name('store');
+});
+
+require __DIR__ . '/auth.php';
+
 
 
