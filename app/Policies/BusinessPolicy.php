@@ -14,18 +14,19 @@ class BusinessPolicy
 
 
 
+
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\* $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny($user, Business $business)
     {
-       
-    
-     
-        if($user->id === $business->user_id){
+
+
+
+        if ($user->business_id === $business->id || $user->id === $business->user_id) {
             return true;
         }
 
@@ -39,12 +40,13 @@ class BusinessPolicy
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Business $business)
+    public function view($user, Business $business)
     {
-     dd(auth()->user());
-       
+
+        return true;
+
         ///show
-        if($user->id === $business->user_id){
+        if ($user->id === $business->user_id) {
             return true;
         }
         return false;
@@ -56,16 +58,15 @@ class BusinessPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user, Business $business)
+    public function create($user, Business $business)
     {
-        
-        
-        if($user->id === $business->user_id){
+
+
+        if ($user->business_id === $business->id || $user->id === $business->user_id) {
             return true;
         }
-        
-        return false;
 
+        return false;
     }
 
     /**
@@ -75,12 +76,13 @@ class BusinessPolicy
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Business $business)
+    public function update($user, Business $business)
     {
-        if($user->id === $business->user_id){
+
+        if ($user->business_id === $business->id || $user->id === $business->user_id) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -91,13 +93,13 @@ class BusinessPolicy
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Business $business,Employee $employee)
+    public function delete($user, Business $business)
     {
-        
-        if($user->id === $business->user_id && $business->id === $employee->business_id){
+
+        if ($user->business_id === $business->id || $user->id === $business->user_id) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -108,9 +110,8 @@ class BusinessPolicy
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Business $business)
+    public function restore($user, Business $business)
     {
-        
     }
 
     /**
@@ -120,7 +121,7 @@ class BusinessPolicy
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Business $business)
+    public function forceDelete($user, Business $business)
     {
         //
     }

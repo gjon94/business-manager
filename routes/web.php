@@ -38,7 +38,7 @@ Route::resource('/business-manage', BusinessManageController::class);
 
 Route::prefix('business/{businessId}')
 ->name('business.')
-->middleware([])
+->middleware(['checkTypeOfUser'])
 ->group(function (){
 
 
@@ -53,6 +53,7 @@ Route::prefix('business/{businessId}')
     //edit business info
 
     //TO-DO Route::resource('edit');
+ 
 
 });
 
@@ -63,7 +64,7 @@ Route::prefix('business/{businessId}')
 Route::prefix('employee')->name('employee.')->group(function () {
     
     Route::get('/', [EmployeeController::class, 'index'])->name('index');
-    Route::get('/login', [LoginEmployee::class, 'create'])->name('show');
+    Route::get('/login', [LoginEmployee::class, 'create'])->name('create');
     Route::post('/loginPost', [LoginEmployee::class, 'store'])->name('store');
 });
 

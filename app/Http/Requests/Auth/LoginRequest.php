@@ -66,15 +66,16 @@ class LoginRequest extends FormRequest
     public function authenticateEmployee()
     {
 
-
+        
         Auth::logout();
-        Auth::setDefaultDriver('employee');
+        
         
         $this->ensureIsNotRateLimited('id');
-
-        if (!Auth::attempt($this->only('id', 'password'), true)) {
+        
+        if (!Auth::guard('employee')->attempt($this->only('id', 'password'), true)) {
             RateLimiter::hit($this->throttleKey('id'));
-
+            dd('o');
+            
             throw ValidationException::withMessages([
                 'id' => trans('auth.failed'),
             ]);
@@ -82,7 +83,6 @@ class LoginRequest extends FormRequest
 
         RateLimiter::clear($this->throttleKey('id'));
         
-       
         
     }
 

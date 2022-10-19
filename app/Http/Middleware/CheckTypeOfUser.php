@@ -17,6 +17,7 @@ class CheckTypeOfUser
      */
     public function handle(Request $request, Closure $next)
     {
+
         
         
         if(auth('employee')->user()){

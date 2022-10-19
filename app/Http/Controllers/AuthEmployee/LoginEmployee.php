@@ -24,17 +24,20 @@ class LoginEmployee extends Controller
 
     public function create()
     {
+        
       
         return view('employee.login');
     }
     
     public function store(LoginRequestEmployee $request)
     {
+        
+
         $request->authenticateEmployee();
         
         $request->session()->regenerate();
 
-        
+       
         
         return redirect('/employee');
     }

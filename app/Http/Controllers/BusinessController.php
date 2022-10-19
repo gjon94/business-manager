@@ -19,16 +19,15 @@ class BusinessController extends Controller
      */
     public function index(Request $request,$businessId)
     {
-       
+        // dd('ok with polic');
         
         $business = Business::findOrFail($businessId);
       
         $this->authorize('viewAny', $business);
         
 
-        $employees = $business->employees;
         
-        return view('business.index',compact('business','employees'));
+        return view('business.homepage',compact('business'));
     }
 
 

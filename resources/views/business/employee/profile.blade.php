@@ -20,10 +20,10 @@
                 <p class="text-gray-700 text-base mb-4">
                     With supporting text below as a natural lead-in to additional content.
                 </p>
-                <form action="{{route('business.employees.delete',[ $business->id,$employee->id])}}" method="POST">
+                <form action="{{route('business.employees.destroy',[ $business->id,$employee->id])}}" method="POST">
                     @csrf
                     @method('delete')
-                    <button type="submit" class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md
+                    <button type="submit" class=" inline-block px-6 py-2.5 bg-blue-600 text-black font-medium text-xs leading-tight uppercase rounded shadow-md
                  hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg 
                  transition duration-150 ease-in-out">licenzia</button>
                 </form>

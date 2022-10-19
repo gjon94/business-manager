@@ -17,20 +17,17 @@ class BusinessManageEmployeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,$businessId)
+    public function index(Request $request, $businessId)
     {
-        // dd(auth()->user());
-        dd($businessId);
-        
-        
+
         $business = Business::findOrFail($businessId);
-      
+
         $this->authorize('viewAny', $business);
-        
+
 
         $employees = $business->employees;
-        
-        return view('business.index',compact('business','employees'));
+
+        return view('business.employee.index', compact('business', 'employees'));
     }
 
     /**
@@ -41,13 +38,13 @@ class BusinessManageEmployeesController extends Controller
     public function create($businessId)
     {
         //form creazione dipendenti dalla route business
-        
+
         $business = Business::findOrFail($businessId);
-       
+
         //controllo role/form visibile solo chi ha il permesso
         $this->authorize('create', $business);
 
-        return view('business.create',compact('business'));
+        return view('business.create', compact('business'));
     }
 
 
@@ -60,7 +57,7 @@ class BusinessManageEmployeesController extends Controller
     public function store(Request $request, $businessId)
     {
         // invio dati utente per registrare
-        
+
         $business = Business::findOrFail($businessId);
 
         $this->authorize('create', $business);
@@ -78,27 +75,33 @@ class BusinessManageEmployeesController extends Controller
         $employee->save();
 
 
-       
-        return redirect(route('business.homepage',['businessId'=>$businessId]))->with(['success_mess'=>$password]);
+        return redirect(route('business.employees.index', $businessId));
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified employee.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($businessId, $employeeId)
     {
-        dd($employeeId, $businessId);
-        $employee = Employee::findOrFail($employeeId);
+
         $business = Business::findOrFail($businessId);
 
-        
-         $this->authorize('view',$business);
+        $this->authorize('view', $business);
 
-         return view('business.employee.profile',compact(['employee','business']));
 
+        $employee = Employee::findOrFail($employeeId);
+
+
+
+        if ($employee->business_id !== $business->id) {
+            abort(404);
+        }
+
+
+        return view('business.employee.profile', compact(['employee', 'business']));
     }
 
     /**
@@ -109,13 +112,22 @@ class BusinessManageEmployeesController extends Controller
      */
     public function edit($businessId, $employeeId)
     {
+
+
         $business = Business::findOrFail($businessId);
+
         $employee = Employee::findOrFail($employeeId);
 
-        
-        return view('business.employee.editForm',compact('employee','businessId'));
+        if ($business->id !== $employee->business_id) {
+            abort(404);
+        }
+
+        $this->authorize('update', $business);
 
 
+
+
+        return view('business.employee.editForm', compact('employee', 'businessId'));
     }
 
     /**
@@ -125,19 +137,22 @@ class BusinessManageEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $businessId,$employeeId)
+    public function update(Request $request, $businessId, $employeeId)
     {
         $business = Business::findOrFail($businessId);
-
-        $this->authorize('update',$business);
-        
         $employee = Employee::findOrFail($employeeId);
+
+        if ($business->id !== $employee->business_id) {
+            abort(404);
+        }
+
+        $this->authorize('update', $business);
+
         $employee->name = $request->name;
         $employee->surname = $request->surname;
         $employee->save();
 
-        return redirect(route('business.homepage',$businessId));
-
+        return redirect(route('business.employees.index', $businessId));
     }
 
     /**
@@ -148,16 +163,17 @@ class BusinessManageEmployeesController extends Controller
      */
     public function destroy($businessId, $employeeId)
     {
-       $business = Business::findOrFail($businessId);
+        $business = Business::findOrFail($businessId);
+        $employee = Employee::findOrFail($employeeId);
 
-       
-       $employee = Employee::findOrFail($employeeId);
-       
-       $this->authorize('delete',[$business, $employee]);
-       
-       $employee->delete();
+        if ($business->id !== $employee->business_id) {
+            abort(404);
+        }
 
-       return redirect()->back();
+        $this->authorize('delete', $business);
 
+        $employee->delete();
+
+        return redirect()->back();
     }
 }

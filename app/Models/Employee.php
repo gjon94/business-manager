@@ -43,10 +43,10 @@ class Employee extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    
+
 
     public function getMyCompany()
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(Business::class, 'business_id');
     }
 }

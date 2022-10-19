@@ -11,10 +11,11 @@ class EmployeeController extends Controller
         
         
 
-        dd(auth('employee')->user());
-        // if(!auth('employee')->user()){
-        //     return redirect(route('employee.show'));
-        // }
+        
+        if(auth('employee')->user()){
+            Auth::shouldUse('employee');
+        }
+        
         return view('employee.home');
     }
 }
