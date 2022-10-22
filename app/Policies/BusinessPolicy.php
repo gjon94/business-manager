@@ -79,6 +79,7 @@ class BusinessPolicy
     public function update($user, Business $business)
     {
 
+
         if ($user->business_id === $business->id || $user->id === $business->user_id) {
             return true;
         }

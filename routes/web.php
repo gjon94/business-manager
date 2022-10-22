@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    
+
     return view('welcome');
 });
 
@@ -36,25 +36,14 @@ Route::resource('/business-manage', BusinessManageController::class);
 
 
 
-Route::prefix('business/{businessId}')
-->name('business.')
-->middleware(['checkTypeOfUser'])
-->group(function (){
-
+Route::prefix('business/{businessId}')->name('business.')->middleware(['checkTypeOfUser'])->group(function () {
 
     //Homepage of interiors business'employees
 
-    Route::get('/homepage',[BusinessController::class, 'index'])->name('homepage');
+    Route::get('/homepage', [BusinessController::class, 'index'])->name('homepage');
 
     // manage employees
-
-    Route::resource('/employees',BusinessManageEmployeesController::class);
-
-    //edit business info
-
-    //TO-DO Route::resource('edit');
- 
-
+    Route::resource('/employees', BusinessManageEmployeesController::class);
 });
 
 
@@ -62,13 +51,10 @@ Route::prefix('business/{businessId}')
 
 
 Route::prefix('employee')->name('employee.')->group(function () {
-    
+
     Route::get('/', [EmployeeController::class, 'index'])->name('index');
     Route::get('/login', [LoginEmployee::class, 'create'])->name('create');
     Route::post('/loginPost', [LoginEmployee::class, 'store'])->name('store');
 });
 
 require __DIR__ . '/auth.php';
-
-
-

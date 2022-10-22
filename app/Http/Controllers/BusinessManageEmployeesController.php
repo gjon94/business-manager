@@ -174,6 +174,6 @@ class BusinessManageEmployeesController extends Controller
 
         $employee->delete();
 
-        return redirect()->back();
+        return redirect(route('business.employees.index', $businessId));
     }
 }

@@ -18,15 +18,19 @@ return new class extends Migration
             $table->string('password');
             $table->string('email')->default()->nullable();
             $table->unsignedBigInteger('business_id');
-            $table->integer('role')->default(10);
+            $table->unsignedBigInteger('role_id');
             $table->string('name');
             $table->string('surname');
             $table->timestamp('dateOfBirth');
             $table->timestamps();
             $table->rememberToken();
             $table->foreign('business_id')
-            ->references('id')
-            ->on('businesses');
+                ->references('id')
+                ->on('businesses');
+
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles');
         });
     }
 
