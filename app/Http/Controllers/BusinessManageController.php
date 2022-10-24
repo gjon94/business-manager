@@ -15,12 +15,11 @@ class BusinessManageController extends Controller
      */
     public function index()
     {
-        
-        
+
+
         $businessList = User::findOrFail(auth()->id())->business;
-        
-        return view('business-manage.index',compact('businessList'));
-        
+
+        return view('business-manage.index', compact('businessList'));
     }
 
     /**
@@ -45,7 +44,8 @@ class BusinessManageController extends Controller
         $business->user_id = auth()->id();
         $business->name = $request->name;
         $business->address = $request->address;
-        $business->sector = $request->sector;
+
+        $business->sector_id = $request->sector;
         $business->save();
 
         return redirect(route('business-manage.index'));

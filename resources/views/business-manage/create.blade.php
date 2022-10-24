@@ -17,7 +17,10 @@
         <input type="text" name="address">
          <br>
         <label for="sector">settore</label>
-        <input type="text" name="sector">
+        <select name="sector" id="sector">
+            <option value="1">edilizia</option>
+            <option value="2">logistica</option>
+          </select>
         <br>
         <button type="reset">Reset</button>
         <button type="submit">Crea</button>

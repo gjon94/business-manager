@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->integer('power')->default(5);
+            $table->integer('power');
             $table->string('name', 50);
             $table->string('description', 255);
         });

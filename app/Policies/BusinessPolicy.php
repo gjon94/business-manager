@@ -25,17 +25,28 @@ class BusinessPolicy
     {
 
 
-
-        if ($user->business_id === $business->id || $user->id === $business->user_id) {
+        if ($user->getTable() === 'users' && $user->id === $business->user_id) {
             return true;
         }
+
+
+        if (
+            $user->getTable() === 'employees' &&
+            $user->business_id === $business->id &&
+            isset($user->role) &&
+            $user->role <= 10
+        ) {
+
+            return true;
+        }
+
 
         return false;
     }
 
     /**
      * Determine whether the user can view the model.
-     *
+     * Alias SHOW
      * @param  \App\Models\User  $user
      * @param  \App\Models\Business  $business
      * @return \Illuminate\Auth\Access\Response|bool
@@ -43,12 +54,24 @@ class BusinessPolicy
     public function view($user, Business $business)
     {
 
-        return true;
 
-        ///show
-        if ($user->id === $business->user_id) {
+
+        if ($user->getTable() === 'users' && $user->id === $business->user_id) {
             return true;
         }
+
+
+        if (
+            $user->getTable() === 'employees' &&
+            $user->business_id === $business->id &&
+            isset($user->role) &&
+            $user->role <= 4
+        ) {
+
+            return true;
+        }
+
+
         return false;
     }
 
@@ -61,10 +84,21 @@ class BusinessPolicy
     public function create($user, Business $business)
     {
 
-
-        if ($user->business_id === $business->id || $user->id === $business->user_id) {
+        if ($user->getTable() === 'users' && $user->id === $business->user_id) {
             return true;
         }
+
+
+        if (
+            $user->getTable() === 'employees' &&
+            $user->business_id === $business->id &&
+            isset($user->role) &&
+            $user->role <= 3
+        ) {
+
+            return true;
+        }
+
 
         return false;
     }
@@ -80,9 +114,22 @@ class BusinessPolicy
     {
 
 
-        if ($user->business_id === $business->id || $user->id === $business->user_id) {
+
+        if ($user->getTable() === 'users' && $user->id === $business->user_id) {
             return true;
         }
+
+
+        if (
+            $user->getTable() === 'employees' &&
+            $user->business_id === $business->id &&
+            isset($user->role) &&
+            $user->role <= 3
+        ) {
+
+            return true;
+        }
+
 
         return false;
     }
@@ -97,9 +144,22 @@ class BusinessPolicy
     public function delete($user, Business $business)
     {
 
-        if ($user->business_id === $business->id || $user->id === $business->user_id) {
+
+        if ($user->getTable() === 'users' && $user->id === $business->user_id) {
             return true;
         }
+
+
+        if (
+            $user->getTable() === 'employees' &&
+            $user->business_id === $business->id &&
+            isset($user->role) &&
+            $user->role <= 3
+        ) {
+
+            return true;
+        }
+
 
         return false;
     }

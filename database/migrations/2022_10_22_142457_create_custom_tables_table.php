@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('description', 255);
             $table->integer('last_editor_id');
-            $table->unsignedBigInteger('deadline_id');
+            $table->unsignedBigInteger('deadline_id')->nullable();
 
             $table->foreign('business_id')->references('id')->on('businesses');
 
-            $table->foreign('deadline_id')->references('id')->on('deadlines');
+            $table->foreign('deadline_id')->references('id')->on('deadline_tables');
         });
     }
 

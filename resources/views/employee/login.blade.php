@@ -11,7 +11,7 @@
     <form method="POST" action="{{route('employee.store')}}" >
 @csrf
 
-<label for="id">mail o id</label>
+<label for="id">ID dipendente</label>
 <input type="text" name="id" id="id">
 
 <label for="password">password</label>

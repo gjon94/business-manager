@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('password');
-            $table->string('email')->default()->nullable();
+            $table->string('email')->default(null)->nullable();
             $table->unsignedBigInteger('business_id');
-            $table->unsignedBigInteger('role_id');
+            $table->integer('role')->default(10);
+            $table->unsignedBigInteger('contract_id')->default(1);
             $table->string('name');
             $table->string('surname');
             $table->timestamp('dateOfBirth');
@@ -28,9 +29,9 @@ return new class extends Migration
                 ->references('id')
                 ->on('businesses');
 
-            $table->foreign('role_id')
+            $table->foreign('contract_id')
                 ->references('id')
-                ->on('roles');
+                ->on('contracts');
         });
     }
 

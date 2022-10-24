@@ -53,7 +53,7 @@ Route::prefix('business/{businessId}')->name('business.')->middleware(['checkTyp
 Route::prefix('employee')->name('employee.')->group(function () {
 
     Route::get('/', [EmployeeController::class, 'index'])->name('index');
-    Route::get('/login', [LoginEmployee::class, 'create'])->name('create');
+    Route::get('/login', [LoginEmployee::class, 'create'])->name('login');
     Route::post('/loginPost', [LoginEmployee::class, 'store'])->name('store');
 });
 

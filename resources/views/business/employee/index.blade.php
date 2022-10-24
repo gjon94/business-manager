@@ -26,7 +26,7 @@
    
 
          <div class="overflow-x-auto relative w-1/2 m-auto">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <table class="w-full text-sm  text-gray-500 dark:text-gray-400 text-center">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="py-3 px-6">
@@ -40,6 +40,12 @@
                         <th scope="col" class="py-3 px-6">
                             modifica
                         </th>
+                        <th scope="col" class="py-3 px-6">
+                            inizio contratto
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            fine contratto
+                        </th>
                     
                     </tr>
                 </thead>
@@ -48,7 +54,7 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
        
                         <td class="py-4 px-6">
-                           <a href="{{route('business.employees.show',[$business->id,$employee->id])}}">{{$employee->name}}</a> 
+                           <a href="{{route('business.employees.show',[$business->id,$employee->id])}}">#{{$employee->id}} {{$employee->name}}</a> 
                         </td>
 
                         <td class="py-4 px-6">
@@ -61,6 +67,15 @@
 
                         <td>
                             <a href="{{route('business.employees.edit',[$business->id,$employee->id])}}"><button>modifica</button></a> 
+                        </td>
+
+                        <td>
+                           {{$employee->start_time}} 
+                        </td>
+
+                        <td>
+                             {{$employee->end_time}} 
+                             
                         </td>
                         
                     </tr>
