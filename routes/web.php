@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthEmployee\LoginEmployee;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\BusinessManageController;
 use App\Http\Controllers\BusinessManageEmployeesController;
+use App\Http\Controllers\CustomTablesController;
 use App\Http\Controllers\EmployeeController;
 use App\Models\Business;
 use App\Models\User;
@@ -36,7 +37,7 @@ Route::resource('/business-manage', BusinessManageController::class);
 
 
 
-Route::prefix('business/{businessId}')->name('business.')->middleware(['checkTypeOfUser'])->group(function () {
+Route::prefix('business/{businessId}')->name('business.')->middleware(['checkTypeOfUser', 'auth'])->group(function () {
 
     //Homepage of interiors business'employees
 
@@ -44,6 +45,8 @@ Route::prefix('business/{businessId}')->name('business.')->middleware(['checkTyp
 
     // manage employees
     Route::resource('/employees', BusinessManageEmployeesController::class);
+
+    Route::resource('/tables', CustomTablesController::class);
 });
 
 

@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('deadline_tables', function (Blueprint $table) {
+        Schema::create('content_custom_columns', function (Blueprint $table) {
             $table->id();
-            $table->date('start_time')->default(NULL);
-            $table->date('end_time')->default(NULL);
+            $table->unsignedBigInteger('custom_column_name_id');
+            $table->string('content', 20)->default('');
+
+            $table->foreign('custom_column_name_id')
+                ->references('id')
+                ->on('custom_column_names');
         });
     }
 
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deadline_tables');
+        Schema::dropIfExists('content_custom_columns');
     }
 };

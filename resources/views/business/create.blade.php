@@ -41,6 +41,7 @@
         <label for="contract">tipo di contratto</label>
         <select name="contract_type_id">
             <option selected value="1">indeterminato</option>
+            <option  value="2">partime</option>
         </select>
         <br>
         

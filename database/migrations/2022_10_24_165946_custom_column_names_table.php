@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('custom_tables', function (Blueprint $table) {
+        Schema::create('custom_column_names', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('business_id');
-            $table->string('name', 15);
-            $table->string('description', 255)->nullable();
-
-            $table->foreign('business_id')->references('id')->on('businesses');
+            $table->unsignedBigInteger('custom_table_id');
+            $table->string('name', 15)->default('no_name');
+            $table->foreign('custom_table_id')
+                ->references('id')
+                ->on('custom_tables');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('custom_tables');
+        Schema::dropIfExists('custom_column_names');
     }
 };
