@@ -66,24 +66,28 @@ class LoginRequest extends FormRequest
     public function authenticateEmployee()
     {
 
-        
-        Auth::logout();
-        
-        
+
+        if (auth('employee')->user()) {
+
+            Auth::guard('employee')->logout();
+        } else {
+            Auth::logout();
+        }
+
+
+
         $this->ensureIsNotRateLimited('id');
-        
+
         if (!Auth::guard('employee')->attempt($this->only('id', 'password'), true)) {
             RateLimiter::hit($this->throttleKey('id'));
-            dd('o');
-            
+
+
             throw ValidationException::withMessages([
                 'id' => trans('auth.failed'),
             ]);
         }
 
         RateLimiter::clear($this->throttleKey('id'));
-        
-        
     }
 
     /**
@@ -118,6 +122,7 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey($val)
     {
+
         return Str::transliterate(Str::lower($this->input($val)) . '|' . $this->ip());
     }
 }

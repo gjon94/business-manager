@@ -13,6 +13,7 @@ class EmployeeController extends Controller
 
 
 
+
         if (auth('employee')->user()) {
             Auth::shouldUse('employee');
         } else {

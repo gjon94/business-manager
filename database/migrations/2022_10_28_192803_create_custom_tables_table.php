@@ -15,11 +15,15 @@ return new class extends Migration
     {
         Schema::create('custom_tables', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('business_id');
-            $table->string('name', 15);
-            $table->string('description', 255)->nullable();
+            $table->unsignedBigInteger('custom_page_id');
+            $table->timestamp('column_1')->nullable();
+            $table->timestamp('column_2')->nullable();
+            $table->string('column_3', 20)->nullable();
+            $table->string('column_4', 20)->nullable();
 
-            $table->foreign('business_id')->references('id')->on('businesses');
+            $table->foreign('custom_page_id')
+                ->references('id')
+                ->on('custom_pages');
         });
     }
 

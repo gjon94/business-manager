@@ -19,4 +19,9 @@ class Business extends Model
     {
         return $this->hasMany(Employee::class);
     }
+
+    public function customTables()
+    {
+        return $this->hasMany(CustomTables::class);
+    }
 }

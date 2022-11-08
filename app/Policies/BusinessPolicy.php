@@ -25,6 +25,7 @@ class BusinessPolicy
     {
 
 
+
         if ($user->getTable() === 'users' && $user->id === $business->user_id) {
             return true;
         }

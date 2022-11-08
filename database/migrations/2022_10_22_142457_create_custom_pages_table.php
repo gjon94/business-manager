@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('content_custom_columns', function (Blueprint $table) {
+        Schema::create('custom_pages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('custom_column_name_id');
-            $table->string('content', 20)->default('');
+            $table->unsignedBigInteger('business_id');
+            $table->string('name', 15);
+            $table->string('description', 255)->nullable();
 
-            $table->foreign('custom_column_name_id')
-                ->references('id')
-                ->on('custom_column_names');
+            $table->foreign('business_id')->references('id')->on('businesses');
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('content_custom_columns');
+        Schema::dropIfExists('custom_pages');
     }
 };

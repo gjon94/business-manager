@@ -4,11 +4,10 @@ use App\Http\Controllers\AuthEmployee\LoginEmployee;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\BusinessManageController;
 use App\Http\Controllers\BusinessManageEmployeesController;
-use App\Http\Controllers\CustomTablesController;
+use App\Http\Controllers\CustomPageController;
+use App\Http\Controllers\CustomTableControler;
 use App\Http\Controllers\EmployeeController;
-use App\Models\Business;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +26,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/prova', function () {
+
+    return view('prova');
+});
+
+Route::get('/ddd', function () {
+
+    $g = DB::select(DB::raw('select businesses.id as businessId, custom_pages.id as customPageId,custom_pages.name as customPageName ,
+    custom_tables.column_2 as end_time,custom_tables.column_3,column_names.name_column_3 as columnName from businesses
+    
+    inner join custom_pages on custom_pages.business_id = businesses.id
+    inner join custom_tables on custom_tables.custom_page_id = custom_pages.id
+    inner join column_names on column_names.custom_page_id = custom_pages.id
+    
+    
+    where businesses.id = 1 and custom_tables.column_2 is not null
+     
+    
+    order by custom_tables.column_2 '));
+    return $g;
+});
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
@@ -37,7 +61,7 @@ Route::resource('/business-manage', BusinessManageController::class);
 
 
 
-Route::prefix('business/{businessId}')->name('business.')->middleware(['checkTypeOfUser', 'auth'])->group(function () {
+Route::prefix('business/{businessId}')->name('business.')->middleware(['auth', 'checkTypeOfUser'])->group(function () {
 
     //Homepage of interiors business'employees
 
@@ -46,7 +70,14 @@ Route::prefix('business/{businessId}')->name('business.')->middleware(['checkTyp
     // manage employees
     Route::resource('/employees', BusinessManageEmployeesController::class);
 
-    Route::resource('/tables', CustomTablesController::class);
+
+
+    Route::prefix('pages')->name('page.')->group(function () {
+
+        Route::resource('/custom-page', CustomPageController::class);
+
+        Route::resource('/{customPageId}/tables', CustomTableControler::class);
+    });
 });
 
 
