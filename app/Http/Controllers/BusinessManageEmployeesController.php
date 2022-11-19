@@ -40,7 +40,7 @@ class BusinessManageEmployeesController extends Controller
             ->get();
 
 
-        return view('business.employee.index', compact('business', 'employees'));
+        return view('businessEmployee', compact('business', 'employees'));
     }
 
     /**
@@ -57,7 +57,7 @@ class BusinessManageEmployeesController extends Controller
         //controllo role/form visibile solo chi ha il permesso
         $this->authorize('create', $business);
 
-        return view('business.create', compact('business'));
+        return view('businessEmployeeCreate', compact('business'));
     }
 
 
@@ -110,6 +110,7 @@ class BusinessManageEmployeesController extends Controller
         $employee->business_id = $businessId;
         $employee->password = Hash::make('password');
         $employee->role = $request->role;
+        $employee->email = $request->email;
         $employee->name = $request->name;
         $employee->surname = $request->surname;
         $employee->contract_id = $contract->id;
@@ -143,8 +144,8 @@ class BusinessManageEmployeesController extends Controller
             abort(404);
         }
 
-
-        return view('business.employee.profile', compact(['employee', 'business']));
+        echo json_encode($employee);
+        return view('businessEmployeeShow', compact(['employee', 'business']));
     }
 
     /**
@@ -206,6 +207,7 @@ class BusinessManageEmployeesController extends Controller
      */
     public function destroy($businessId, $employeeId)
     {
+
         $business = Business::findOrFail($businessId);
         $employee = Employee::findOrFail($employeeId);
 
@@ -215,8 +217,11 @@ class BusinessManageEmployeesController extends Controller
 
         $this->authorize('delete', $business);
 
-        $employee->delete();
 
-        return redirect(route('business.employees.index', $businessId));
+        if ($employee->delete()) {
+            return redirect(route('business.employees.index', $businessId))->with('success', 'employee deleted');
+        } else {
+            return redirect(route('business.employees.index', $businessId))->withErrors('Qualcosa è andatao storto..');
+        }
     }
 }

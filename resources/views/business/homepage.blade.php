@@ -1,4 +1,8 @@
-<h1>HOMEPAGE</h1>
-<h4>Benvenuti in, {{$business->name}}</h4>
+<x-base-layout>
+    <x-slot name="header">
+       <x-header></x-header>
+    </x-slot>
+     
+    <x-main-section :business=$business></x-main-section>
+   </x-base-layout>
 
-<a href="{{route('business.employees.index',$business->id)}}"><h4>lista dipendenti</h4></a>

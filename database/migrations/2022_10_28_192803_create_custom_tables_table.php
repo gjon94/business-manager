@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('custom_tables', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('custom_page_id');
-            $table->timestamp('column_1')->nullable();
-            $table->timestamp('column_2')->nullable();
+            $table->date('column_1')->nullable();
+            $table->date('column_2')->nullable();
             $table->string('column_3', 20)->nullable();
             $table->string('column_4', 20)->nullable();
 

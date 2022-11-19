@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Business;
 use App\Models\ColumnName;
 use App\Models\CustomPage;
 use App\Models\CustomTable;
@@ -28,7 +29,9 @@ class CustomPageController extends Controller
      */
     public function create($businessId)
     {
-        return view('business.custom-page.create', compact('businessId'));
+        $business = Business::findOrFail($businessId);
+
+        return view('customPageCreate', compact('business'));
     }
 
     /**
@@ -39,6 +42,7 @@ class CustomPageController extends Controller
      */
     public function store(Request $request, $businessId)
     {
+
 
         $request->validate([
             'name' => 'required|string|min:1|max:20',
@@ -56,6 +60,11 @@ class CustomPageController extends Controller
         if ($custom_page->save()) {
             $column_name = new ColumnName;
             $column_name->custom_page_id = $custom_page->id;
+
+            (!$request->name_column_1) ?: $column_name->name_column_1 = $request->name_column_1;
+            (!$request->name_column_2) ?: $column_name->name_column_2 = $request->name_column_2;
+            (!$request->name_column_3) ?: $column_name->name_column_3 = $request->name_column_3;
+            (!$request->name_column_4) ?: $column_name->name_column_4 = $request->name_column_4;
         } else {
             $custom_page->delete();
             return abort(500);
@@ -63,7 +72,8 @@ class CustomPageController extends Controller
 
 
         if ($column_name->save()) {
-            return redirect(route('business.page.custom-page.index', $businessId));
+
+            return redirect(route('business.homepage', $businessId));
         } else {
             $custom_page->delete();
 
@@ -80,13 +90,14 @@ class CustomPageController extends Controller
     public function show($businessId, $pageId)
     {
 
-        $custom_page = CustomPage::findOrFail($pageId);
-        $custom_tables = $custom_page->customTables;
-        $column_names = $custom_page->column_names;
+        $business = Business::findOrFail($businessId);
+
+        $customPage = CustomPage::findOrFail($pageId);
+        $customTables = $customPage->customTables;
+        $columnNames = $customPage->column_names;
 
 
-
-        return view('business.custom-page.show', compact('custom_page', 'custom_tables', 'column_names', 'businessId'));
+        return view('customPage', compact('business', 'customPage', 'customTables', 'columnNames'));
     }
 
     /**
@@ -95,9 +106,14 @@ class CustomPageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($businessId, $customPageId)
     {
-        //
+        $business = Business::findOrFail($businessId);
+        $customPage = CustomPage::findOrFail($customPageId);
+        $columnNames = $customPage->column_names;
+
+
+        return view('customPageEdit', compact('business', 'customPage', 'columnNames'));
     }
 
     /**
@@ -107,9 +123,21 @@ class CustomPageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $businessId, $customPageId)
     {
-        //
+        $customPage = CustomPage::findOrFail($customPageId);
+
+        $customPage->name = $request->name;
+        $customPage->description = $request->description;
+        $customPage->save();
+
+        $columnNames = $customPage->column_names;
+        $columnNames->name_column_1 = $request->name_column_1;
+        $columnNames->name_column_2 = $request->name_column_2;
+        $columnNames->name_column_3 = $request->name_column_3;
+        $columnNames->name_column_4 = $request->name_column_4;
+        $columnNames->save();
+        return redirect(route('business.page.custom-page.show', [$businessId, $customPageId]));
     }
 
     /**

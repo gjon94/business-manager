@@ -1,3 +1,4 @@
+use business_manager;
 insert into contract_types(name) values ("partime");
 insert into contract_types(name) values ("full time");
 

@@ -24,4 +24,9 @@ class Business extends Model
     {
         return $this->hasMany(CustomTables::class);
     }
+
+    public function customPages()
+    {
+        return $this->hasMany(CustomPage::class);
+    }
 }

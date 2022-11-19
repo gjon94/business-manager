@@ -21,12 +21,6 @@ class CheckTypeOfUser
 
 
 
-        // Set type of user logged user/employee
-        if (auth('employee')->user()) {
-            Auth::shouldUse('employee');
-        }
-
-
         //compare if user logged is relationed with business
 
 

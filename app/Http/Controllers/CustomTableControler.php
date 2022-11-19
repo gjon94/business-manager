@@ -112,8 +112,11 @@ class CustomTableControler extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($businessId, $customPageId, $tableId)
     {
-        //
+        $custom_table = CustomTable::findOrFail($tableId);
+        $custom_table->delete();
+
+        return redirect()->back();
     }
 }
