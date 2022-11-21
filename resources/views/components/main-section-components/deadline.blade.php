@@ -1,7 +1,7 @@
 
 
-<a href={{(isset($deadline->employeeId))?route('business.employees.index',request()->businessId):
-route('business.page.custom-page.show',[request()->businessId,$deadline->customPageId])}}>
+<a href={{(isset($deadline->employeeId))?route('business.employees.index',request()->business):
+route('business.page.customPage.show',[request()->business,$deadline->customPageId])}}>
     <article class="p-2 border rounded-lg shadow-md flex">
       <div class="grow">
         <h5 class="text-xs text-slate-400">Gruppo :</h5>

@@ -5,9 +5,13 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Business;
-use App\Models\CustomTables;
+use App\Models\CustomPage;
+use App\Models\Employee;
+
 use App\Policies\BusinessPolicy;
-use App\Policies\CustomTables as PoliciesCustomTables;
+use App\Policies\CustomPagePolicy;
+use App\Policies\EmployeePolicy;
+
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -19,7 +23,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Business::class => BusinessPolicy::class,
-        CustomTables::class => PoliciesCustomTables::class
+        Employee::class => EmployeePolicy::class,
+        CustomPage::class => CustomPagePolicy::class,
     ];
 
     /**

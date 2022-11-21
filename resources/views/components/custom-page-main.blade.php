@@ -10,7 +10,12 @@
         
        
           <h1 class="font-bold text-3xl text-blue-800">{{$customPage->name}}:
-             <a href="{{route('business.page.custom-page.edit',[$business->id,$customPage->id])}}">&#9999;</a></h1>
+             <a href="{{route('business.page.customPage.edit',[$business->id,$customPage->id])}}">&#9999;</a></h1>
+             <form action="{{route('business.page.customPage.destroy',[$business->id,$customPage->id])}}" method="post"> 
+              @csrf
+              @method('DELETE')
+              <button class=" p-3 border-red-500 hover:bg-red-700 hover:text-slate-200" type="submit">&#128465;</button>
+            </form>
          
       
           

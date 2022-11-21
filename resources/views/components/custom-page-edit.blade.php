@@ -6,7 +6,7 @@
 
     <article class="border rounded-lg shadow-md flex flex-col p-2 pt-5 relative h-full">
       
-        <form class="flex grow flex-wrap pt-5" action="{{route('business.page.custom-page.update',[$business->id,$customPage])}}" method="post">
+        <form class="flex grow flex-wrap pt-5" action="{{route('business.page.customPage.update',[$business->id,$customPage])}}" method="post">
            @csrf
            @method('PATCH')
              <div class="grow w-full sm:w-1/2 md:w-1/4">

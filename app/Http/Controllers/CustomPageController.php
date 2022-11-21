@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class CustomPageController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(CustomPage::class, 'customPage');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,8 +33,10 @@ class CustomPageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($businessId)
+    public function create($businessId, CustomPage $customPage)
     {
+
+
         $business = Business::findOrFail($businessId);
 
         return view('customPageCreate', compact('business'));
@@ -87,12 +95,13 @@ class CustomPageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($businessId, $pageId)
+    public function show($businessId, CustomPage $customPage)
     {
+
 
         $business = Business::findOrFail($businessId);
 
-        $customPage = CustomPage::findOrFail($pageId);
+
         $customTables = $customPage->customTables;
         $columnNames = $customPage->column_names;
 
@@ -106,10 +115,10 @@ class CustomPageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($businessId, $customPageId)
+    public function edit($businessId, CustomPage $customPage)
     {
         $business = Business::findOrFail($businessId);
-        $customPage = CustomPage::findOrFail($customPageId);
+
         $columnNames = $customPage->column_names;
 
 
@@ -123,12 +132,15 @@ class CustomPageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $businessId, $customPageId)
+    public function update(Request $request, $businessId, CustomPage $customPage)
     {
-        $customPage = CustomPage::findOrFail($customPageId);
+
+
+
 
         $customPage->name = $request->name;
         $customPage->description = $request->description;
+
         $customPage->save();
 
         $columnNames = $customPage->column_names;
@@ -136,8 +148,10 @@ class CustomPageController extends Controller
         $columnNames->name_column_2 = $request->name_column_2;
         $columnNames->name_column_3 = $request->name_column_3;
         $columnNames->name_column_4 = $request->name_column_4;
+
+
         $columnNames->save();
-        return redirect(route('business.page.custom-page.show', [$businessId, $customPageId]));
+        return redirect(route('business.page.customPage.show', [$businessId, $customPage]));
     }
 
     /**
@@ -146,8 +160,9 @@ class CustomPageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($businessId, CustomPage $customPage)
     {
-        //
+        $customPage->delete();
+        return redirect(route('business.homepage', $businessId));
     }
 }

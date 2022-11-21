@@ -13,6 +13,11 @@ class BusinessPolicy
     use HandlesAuthorization;
 
 
+    public function __construct()
+    {
+        dd('in cosntru');
+    }
+
 
 
     /**
@@ -23,7 +28,7 @@ class BusinessPolicy
      */
     public function viewAny($user, Business $business)
     {
-
+        dd('wdd');
 
 
         if ($user->getTable() === 'users' && $user->id === $business->user_id) {
@@ -54,8 +59,9 @@ class BusinessPolicy
      */
     public function view($user, Business $business)
     {
+        dd('wdd');
 
-
+        return true;
 
         if ($user->getTable() === 'users' && $user->id === $business->user_id) {
             return true;

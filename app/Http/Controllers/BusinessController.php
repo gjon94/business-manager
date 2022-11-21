@@ -9,17 +9,20 @@ use Illuminate\Support\Facades\DB;
 
 class BusinessController extends Controller
 {
+
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $businessId)
+    public function homepage(Request $request, $business)
     {
 
-        $business = Business::findOrFail($businessId);
+        $business = Business::findOrFail($business);
 
-        $this->authorize('viewAny', $business);
+
 
         $customPagesDeadlines = DB::select(DB::raw("select businesses.id as businessId, custom_pages.id as customPageId,custom_pages.name as customPageName ,
         custom_tables.column_2 as end_time,custom_tables.column_3,custom_tables.column_4,column_names.name_column_2,column_names.name_column_3,column_names.name_column_4 from businesses

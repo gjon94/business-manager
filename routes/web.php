@@ -69,11 +69,11 @@ Route::resource('/business-manage', BusinessManageController::class);
 
 
 
-Route::prefix('business/{businessId}')->name('business.')->middleware(['auth', 'checkTypeOfUser'])->group(function () {
+Route::prefix('businesses/{business}')->name('business.')->middleware(['auth', 'checkTypeOfUser'])->group(function () {
 
     //Homepage of interiors business'employees
 
-    Route::get('/homepage', [BusinessController::class, 'index'])->name('homepage');
+    Route::get('/homepage', [BusinessController::class, 'homepage'])->name('homepage');
 
     // manage employees
     Route::resource('/employees', BusinessManageEmployeesController::class);
@@ -82,9 +82,9 @@ Route::prefix('business/{businessId}')->name('business.')->middleware(['auth', '
 
     Route::prefix('pages')->name('page.')->group(function () {
 
-        Route::resource('/custom-page', CustomPageController::class);
+        Route::resource('/customPage', CustomPageController::class);
 
-        Route::resource('/{customPageId}/tables', CustomTableControler::class);
+        Route::resource('/{customPage}/tables', CustomTableControler::class);
     });
 });
 

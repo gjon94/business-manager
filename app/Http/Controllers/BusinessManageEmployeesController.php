@@ -6,30 +6,34 @@ use App\Models\Business;
 use App\Models\Contract;
 use App\Models\Deadline;
 use App\Models\Employee;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+
 
 class BusinessManageEmployeesController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Employee::class, 'employee');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $businessId)
+    public function index(Request $request, $business)
     {
 
-        $business = Business::findOrFail($businessId);
 
-        $this->authorize('view', $business);
+        $business = Business::findOrFail($business);
 
 
-        // $employees = $business->employees;
+
+
+        $employees = $business->employees;
 
         $employees =  DB::table('employees')
             ->join('contracts', 'contracts.id', '=', 'employees.contract_id')
@@ -54,8 +58,6 @@ class BusinessManageEmployeesController extends Controller
 
         $business = Business::findOrFail($businessId);
 
-        //controllo role/form visibile solo chi ha il permesso
-        $this->authorize('create', $business);
 
         return view('businessEmployeeCreate', compact('business'));
     }
@@ -73,7 +75,7 @@ class BusinessManageEmployeesController extends Controller
 
         $business = Business::findOrFail($businessId);
 
-        $this->authorize('create', $business);
+
 
 
 
@@ -128,23 +130,16 @@ class BusinessManageEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($businessId, $employeeId)
+    public function show($businessId, Employee $employee)
     {
 
         $business = Business::findOrFail($businessId);
-
-        $this->authorize('view', $business);
-
-
-        $employee = Employee::findOrFail($employeeId);
-
-
 
         if ($employee->business_id !== $business->id) {
             abort(404);
         }
 
-        echo json_encode($employee);
+
         return view('businessEmployeeShow', compact(['employee', 'business']));
     }
 
@@ -154,19 +149,19 @@ class BusinessManageEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($businessId, $employeeId)
+    public function edit($businessId, Employee $employee)
     {
 
 
         $business = Business::findOrFail($businessId);
 
-        $employee = Employee::findOrFail($employeeId);
+
 
         if ($business->id !== $employee->business_id) {
             abort(404);
         }
 
-        $this->authorize('update', $business);
+
 
 
 
@@ -181,16 +176,16 @@ class BusinessManageEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $businessId, $employeeId)
+    public function update(Request $request, $businessId, Employee $employee)
     {
         $business = Business::findOrFail($businessId);
-        $employee = Employee::findOrFail($employeeId);
+
 
         if ($business->id !== $employee->business_id) {
             abort(404);
         }
 
-        $this->authorize('update', $business);
+
 
         $employee->name = $request->name;
         $employee->surname = $request->surname;
@@ -205,17 +200,17 @@ class BusinessManageEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($businessId, $employeeId)
+    public function destroy($businessId, Employee $employee)
     {
 
         $business = Business::findOrFail($businessId);
-        $employee = Employee::findOrFail($employeeId);
+
 
         if ($business->id !== $employee->business_id) {
             abort(404);
         }
 
-        $this->authorize('delete', $business);
+
 
 
         if ($employee->delete()) {

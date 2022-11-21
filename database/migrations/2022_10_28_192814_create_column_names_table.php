@@ -23,7 +23,8 @@ return new class extends Migration
 
             $table->foreign('custom_page_id')
                 ->references('id')
-                ->on('custom_pages');
+                ->on('custom_pages')
+                ->onDelete('cascade');
         });
     }
 

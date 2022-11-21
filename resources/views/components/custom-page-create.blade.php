@@ -6,7 +6,7 @@
 
     <article class="border rounded-lg shadow-md flex flex-col p-2 pt-5 relative h-full">
       
-        <form class="flex grow flex-wrap pt-5" action="{{route('business.page.custom-page.store',$business->id)}}" method="post">
+        <form class="flex grow flex-wrap pt-5" action="{{route('business.page.customPage.store',$business->id)}}" method="post">
            @csrf
              <div class="grow w-full sm:w-1/2 md:w-1/4">
                <h5 class="text-xs text-slate-400">Nome grppo:</h5>
@@ -14,6 +14,7 @@
                  name="name"
                   class=" border-0 border-b focus:ring-0"
                  type="text"
+                 required
                  placeholder="Nome"
                /></h2>
              </div>
@@ -23,6 +24,7 @@
                 <h5 class="text-xs text-slate-400">descizione :</h5>
                 <h2 class="text-base"> <input
                   name="description"
+                  required
                    class=" border-0 border-b focus:ring-0"
                   type="text"
                   placeholder="descrizione"

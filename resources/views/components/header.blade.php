@@ -37,7 +37,7 @@ class="bg-blue-900 text-white sticky top-0 basis-[100%] lg:basis-1/6 lg:h-[100%]
       </li>
 
       <li class="p-3">
-        <h4 class="mt-4 p-3 text-slate-400">Gruppi <a href="{{route('business.page.custom-page.create',$business->id)}}">&#10133;</a></h5>
+        <h4 class="mt-4 p-3 text-slate-400">Gruppi <a href="{{route('business.page.customPage.create',$business->id)}}">&#10133;</a></h5>
          
         <a class="mt-2 block md:ml-5" href="{{route('business.employees.index',$business->id)}}">
           <div
@@ -52,7 +52,7 @@ class="bg-blue-900 text-white sticky top-0 basis-[100%] lg:basis-1/6 lg:h-[100%]
           </div>
         </a> 
         @foreach ($business->customPages as $customPage)
-           <a class="mt-2 block md:ml-5" href="{{route('business.page.custom-page.show',[$business->id,$customPage->id])}}">
+           <a class="mt-2 block md:ml-5" href="{{route('business.page.customPage.show',[$business->id,$customPage->id])}}">
           <div
             class="rounded-lg text-center flex p-3 hover:bg-blue-800"
           >

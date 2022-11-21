@@ -8,7 +8,7 @@
 </head>
 <body>
     
-    <form action="{{route('business.page.custom-page.store',$businessId)}}" method="post">
+    <form action="{{route('business.page.customPage.store',$businessId)}}" method="post">
         @csrf 
         <label for="name"></label>
         <input type="text" name="name" placeholder="Inserisci nome nuova pagina">

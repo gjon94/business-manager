@@ -24,19 +24,19 @@ class CheckTypeOfUser
         //compare if user logged is relationed with business
 
 
-        $businessId = $request->route('businessId');
+        $business = $request->route('business');
 
 
 
-        if (!isset($businessId) || !is_numeric($businessId) || $businessId == 0) {
+        if (!isset($business) || !is_numeric($business) || $business == 0) {
             return abort(404);
         }
 
 
 
-        $business = Business::findOrFail($businessId);
-
+        $business = Business::findOrFail($business);
         if ($business->user_id === auth()->user()->id || auth()->user()->business_id === $business->id) {
+
             return $next($request);
         } else {
             return abort(400);
