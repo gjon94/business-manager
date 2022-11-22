@@ -11,9 +11,12 @@
         >
         <h1 class="font-bold text-2xl text-blue-800 mb-5">Scadenze:</h1>
         <div class="flex flex-col gap-2">
-          @foreach ($deadlines as $deadline)
+          @forelse ($deadlines as $deadline)
           <x-main-section-components.deadline :deadline="$deadline"></x-main-section-components.deadline>
-          @endforeach
+          @empty
+              <h1 class="text-2xl">Non ci sono scadenza </h1>
+          
+          @endforelse
           
           
         </div>

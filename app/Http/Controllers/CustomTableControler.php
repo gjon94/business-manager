@@ -7,6 +7,22 @@ use Illuminate\Http\Request;
 
 class CustomTableControler extends Controller
 {
+
+
+    // public function __construct()
+    // {
+
+
+
+    //     // if custom page is not related with business
+    //     if (request()->customPage instanceof  CustomPage && request()->business != request()->customPage->business_id) {
+
+    //         return abort(403, "no relation");
+    //     }
+    // }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -36,6 +52,7 @@ class CustomTableControler extends Controller
     public function store(Request $request, $businessId, $customPageId)
     {
 
+        $this->authorize('create', CustomTable::class);
 
         $request->validate([
             'column_1' => 'date|nullable',
@@ -74,15 +91,20 @@ class CustomTableControler extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $businessId, $customPageId, $tableId)
+    public function update(Request $request, $businessId, $customPageId, CustomTable $table)
     {
-        $custom_table = CustomTable::findOrFail($tableId);
 
-        $custom_table->column_1 = $request->column_1;
-        $custom_table->column_2 = $request->column_2;
-        $custom_table->column_3 = $request->column_3;
-        $custom_table->column_4 = $request->column_4;
-        $custom_table->save();
+
+
+
+        $this->authorize('update', $table);
+
+
+        $table->column_1 = $request->column_1;
+        $table->column_2 = $request->column_2;
+        $table->column_3 = $request->column_3;
+        $table->column_4 = $request->column_4;
+        $table->save();
         return back();
     }
 

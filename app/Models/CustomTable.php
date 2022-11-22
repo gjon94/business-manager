@@ -11,4 +11,11 @@ class CustomTable extends Model
 
     protected $table = 'custom_tables';
     public $timestamps = false;
+
+
+    public function belongCustomPage()
+    {
+
+        return $this->belongsTo(CustomPage::class, 'custom_page_id');
+    }
 }
