@@ -11,4 +11,10 @@ class Contract extends Model
 
     protected $table = 'contracts';
     public $timestamps = false;
+
+
+    public function deadline()
+    {
+        return $this->belongsTo(Deadline::class);
+    }
 }

@@ -3,9 +3,21 @@
 <div class="lg:flex gap-4 lg:min-h-[50vh]">
            
     <div class="border bg-white p-3 grow lg:overflow-hidden lg:overflow-y-scroll" >
+   <!--Errors -->
+
+   @if ($errors->any())
+   <div class="alert alert-danger">
+       <ul>
+           @foreach ($errors->all() as $error)
+               <li class="text-red-500">{{ $error }}</li>
+           @endforeach
+       </ul>
+   </div>
+@endif
+     <!--Errors -->
 
     <article class="border rounded-lg shadow-md flex flex-col p-2 pt-5 relative h-full">
-      
+     
         <form class="flex grow flex-wrap pt-5" action="{{route('business.employees.update',[$business->id,$employee->id])}}" method="post">
             @csrf 
             @method('patch')
@@ -36,11 +48,12 @@
                 <h5 class="text-xs text-slate-400">Email :</h5>
                 <h2 class="text-base">
                   <input
-                  disabled
-                  name="email"
+                  
+                  name="email_work"
                   class=" border-0 border-b focus:ring-0"
                     type="email"
-                    value={{($employee->email)?$employee->email:"no-mail"}}
+                    placeholder={{($employee->email_work)?$employee->email_work:"no-mail"}}
+                    value=""
                   />
                 </h2>
               </div>
@@ -49,7 +62,9 @@
                 <h5 class="text-xs text-slate-400">Ruolo :</h5>
                 <h2 class="text-base">
                   <input
-                  disabled
+                  
+                  {{auth()->user()->role < $employee->role?"":"disabled "}}
+                  
                   name="role"
                   class=" border-0 border-b focus:ring-0"
                     type="number"
@@ -64,10 +79,10 @@
                 </h5>
                 <h2 class="text-base">
                   <input
-                  name="dateOfBirth"
+                  name="birthday"
                   class=" border-0 border-b focus:ring-0"
                     type="date"
-                    value={{$employee->dateOfBirth}}
+                    value={{$employee->birthday}}
                   />
                 </h2>
               </div>
@@ -78,13 +93,15 @@
                </h5>
                <h2 class="text-base">
                  <input
-                 name=""
+                 name="start_time"
                  class=" border-0 border-b focus:ring-0"
                    type="date"
-                   value={{$employee->name}}
+                   value={{$deadline->start_time}}
                  />
                </h2>
              </div>
+
+             
        
              <div class="grow w-full sm:w-1/2 md:w-1/4">
                <h5 class="text-xs text-slate-400">
@@ -92,13 +109,53 @@
                </h5>
                <h2 class="text-base">
                  <input
-                 name="column_2"
+                 name="end_time"
                  class=" border-0 border-b focus:ring-0"
                    type="date"
-                   value={{$employee->name}}
+                   value={{$deadline->end_time}}
                  />
                </h2>
              </div>
+
+             <div class="grow w-full sm:w-1/2 md:w-1/4">
+              <h5 class="text-xs text-slate-400">
+               fine contratto :
+              </h5>
+              <h2 class="text-base">
+                <select class="" name="contract_type_id">
+                  <option selected value="1">indeterminato</option>
+                  <option  value="2">partime</option>
+              </select>
+              </h2>
+            </div>
+
+             <div class="grow w-full sm:w-1/2 md:w-1/4">
+              <h5 class="text-xs text-slate-400">
+                paga oraria :
+              </h5>
+              <h2 class="text-base">
+                <input
+                name="hourly_pay"
+                class=" border-0 border-b focus:ring-0"
+                  type="number"
+                  value={{$contract->hourly_pay}}
+                />
+              </h2>
+            </div>
+
+            <div class="grow w-full sm:w-1/2 md:w-1/4">
+              <h5 class="text-xs text-slate-400">
+                valuta :
+              </h5>
+              <h2 class="text-base">
+                <input
+                name="currency"
+                class=" border-0 border-b focus:ring-0"
+                  type="text"
+                  value={{$contract->currency}}
+                />
+              </h2>
+            </div>
 
              <div class="grow w-full sm:w-1/2 md:w-1/4">
                 <h5 class="text-xs text-slate-400">

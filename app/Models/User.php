@@ -19,6 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
+        'type',
+        'role',
         'email',
         'password',
     ];
@@ -43,8 +46,24 @@ class User extends Authenticatable
     ];
 
 
+    // if user is a owner
     public function business()
     {
         return $this->hasMany(Business::class);
+    }
+
+
+
+
+
+    // if user is a employee
+    public function getMyCompany()
+    {
+        return $this->belongsTo(Business::class, 'business_id');
+    }
+
+    public function contract()
+    {
+        return $this->belongsTo(Contract::class);
     }
 }

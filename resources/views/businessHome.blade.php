@@ -3,5 +3,5 @@
     <x-header :business="$business"></x-header>
  </x-slot>
   
- <x-home-main-section :business="$business" :deadlines="$deadlines"></x-home-main-section>
+ <x-home-main-section :business="$business" :deadlines="$deadlines" :posts="$posts"></x-home-main-section>
 </x-base-layout>

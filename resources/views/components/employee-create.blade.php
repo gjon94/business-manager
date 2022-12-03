@@ -6,6 +6,19 @@
 
     <article class="border rounded-lg shadow-md flex flex-col p-2 pt-5 relative h-full">
       
+      <!--Errors -->
+
+      @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li class="text-red-500">{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+      <!--Errors -->
+
         <form class="flex grow flex-wrap pt-5" action="{{route('business.employees.store',$business->id)}}" method="post">
             @csrf
              <div class="grow w-full sm:w-1/2 md:w-1/4">
@@ -23,7 +36,7 @@
                <h2 class="text-base">
                  <input
                  name="surname"
-                 class=" border-0 border-b focus:ring-0"
+                 class=" border-0 border-b focus:ring-0" 
                    type="text"
                    placeholder="Cognome"
                  />
@@ -35,7 +48,7 @@
                 <h2 class="text-base">
                   <input
                   
-                  name="email"
+                  name="email_work"
                   class=" border-0 border-b focus:ring-0"
                     type="email"
                     placeholder="Email"
@@ -47,11 +60,11 @@
                 <h5 class="text-xs text-slate-400">Ruolo :</h5>
                 <h2 class="text-base">
                     <select name="role">
-                        <option value="1">1 admin</option>
-                        <option value="2">2 manager</option>
-                        <option value="3">3 senior secretary</option>
-                        <option value="4">4 secretary</option>
-                        <option value="10">10 dipendente</option>
+                        <option value="2">1 manager</option>
+                        <option value="3">2 admin</option>
+                        <option value="4">3 secretary senior</option>
+                        <option value="5">4 secretary</option>
+                        <option value="10">5 owner</option>
                     </select>
                 </h2>
               </div>
@@ -62,7 +75,7 @@
                 </h5>
                 <h2 class="text-base">
                   <input
-                  name="dateOfBirth"
+                  name="birthday"
                   class=" border-0 border-b focus:ring-0"
                     type="date"
                     placeholder="Data di nascita"

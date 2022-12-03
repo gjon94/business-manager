@@ -1,5 +1,5 @@
 <header
-class="bg-blue-900 text-white sticky top-0 basis-[100%] lg:basis-1/6 lg:h-[100%]"
+class=" text-white sticky top-0 basis-[100%] lg:basis-1/6 lg:h-[100%]"
 >
 <nav class="flex flex-col">
   <!-- Logo app -->

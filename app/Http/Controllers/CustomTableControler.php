@@ -77,6 +77,8 @@ class CustomTableControler extends Controller
 
         $custom_table->column_3 = $request->column_3;
         $custom_table->column_4 = $request->column_4;
+        $custom_table->column_5 = $request->column_5;
+        $custom_table->column_6 = $request->column_6;
         $custom_table->save();
 
         return back();
@@ -104,6 +106,8 @@ class CustomTableControler extends Controller
         $table->column_2 = $request->column_2;
         $table->column_3 = $request->column_3;
         $table->column_4 = $request->column_4;
+        $table->column_5 = $request->column_5;
+        $table->column_6 = $request->column_6;
         $table->save();
         return back();
     }

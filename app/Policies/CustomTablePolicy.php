@@ -16,16 +16,23 @@ class CustomTablePolicy
     {
 
 
+
         $table = request()->table;
-        $customPage = $table->belongCustomPage;
+
+
+
+
         // if custom page is not related with business
 
-        if (
-            $table instanceof CustomTable &&
-            $customPage->id != request()->customPage ||
-            $customPage->business_id != request()->business
-        ) {
-            return abort(403, "no relation");
+
+        if ($table instanceof CustomTable) {
+            $customPage = $table->belongCustomPage;
+            if (
+                $customPage->id != request()->customPage ||
+                $customPage->business_id != request()->business
+            ) {
+                return abort(403, "no relatioggn");
+            }
         }
     }
 

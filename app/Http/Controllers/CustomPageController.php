@@ -33,8 +33,9 @@ class CustomPageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($businessId, CustomPage $customPage)
+    public function create($businessId)
     {
+
 
 
         $business = Business::findOrFail($businessId);
@@ -51,6 +52,12 @@ class CustomPageController extends Controller
     public function store(Request $request, $businessId)
     {
 
+        $business = Business::findOrFail($businessId);
+
+
+        if (count($business->customPages) > 5) {
+            return redirect(route('business.homepage', $businessId))->withErrors('troppi gruppi creati,elimina qualcuno');
+        }
 
         $request->validate([
             'name' => 'required|string|min:1|max:20',
@@ -73,6 +80,8 @@ class CustomPageController extends Controller
             (!$request->name_column_2) ?: $column_name->name_column_2 = $request->name_column_2;
             (!$request->name_column_3) ?: $column_name->name_column_3 = $request->name_column_3;
             (!$request->name_column_4) ?: $column_name->name_column_4 = $request->name_column_4;
+            (!$request->name_column_5) ?: $column_name->name_column_5 = $request->name_column_5;
+            (!$request->name_column_6) ?: $column_name->name_column_6 = $request->name_column_6;
         } else {
             $custom_page->delete();
             return abort(500);
@@ -148,6 +157,8 @@ class CustomPageController extends Controller
         $columnNames->name_column_2 = $request->name_column_2;
         $columnNames->name_column_3 = $request->name_column_3;
         $columnNames->name_column_4 = $request->name_column_4;
+        $columnNames->name_column_5 = $request->name_column_5;
+        $columnNames->name_column_6 = $request->name_column_6;
 
 
         $columnNames->save();

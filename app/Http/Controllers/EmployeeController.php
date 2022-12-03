@@ -13,14 +13,6 @@ class EmployeeController extends Controller
 
 
 
-
-        if (auth('employee')->user()) {
-            Auth::shouldUse('employee');
-        } else {
-            Auth::logout();
-            return redirect(route('employee.login'));
-        }
-
-        return view('employee.home');
+        dd('emmplye index');
     }
 }

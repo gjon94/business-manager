@@ -28,7 +28,7 @@ class LoginEmployee extends Controller
 
 
 
-        return view('employee.login');
+        return view('auth.loginEmployee');
     }
 
     public function store(LoginRequestEmployee $request)

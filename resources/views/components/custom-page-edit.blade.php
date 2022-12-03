@@ -74,6 +74,27 @@
                 /></h2>
               </div>
 
+              <div class="grow w-full sm:w-1/2 md:w-1/4">
+                <h5 class="text-xs text-slate-400">nome colonna 2 :</h5>
+                <h2 class="text-base"> <input
+                  name="name_column_5"
+                   class=" border-0 border-b focus:ring-0"
+                  type="text"
+                  value={{$columnNames->name_column_5}}
+                /></h2>
+              </div>
+
+
+              <div class="grow w-full sm:w-1/2 md:w-1/4">
+                <h5 class="text-xs text-slate-400">nome colonna 2 :</h5>
+                <h2 class="text-base"> <input
+                  name="name_column_6"
+                   class=" border-0 border-b focus:ring-0"
+                  type="text"
+                  value={{$columnNames->name_column_6}}
+                /></h2>
+              </div>
+
             
           
 

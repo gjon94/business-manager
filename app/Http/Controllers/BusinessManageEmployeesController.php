@@ -6,6 +6,7 @@ use App\Models\Business;
 use App\Models\Contract;
 use App\Models\Deadline;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -13,10 +14,7 @@ use Illuminate\Support\Facades\Hash;
 
 class BusinessManageEmployeesController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Employee::class, 'employee');
-    }
+
 
 
     /**
@@ -28,20 +26,24 @@ class BusinessManageEmployeesController extends Controller
     {
 
 
+        $this->authorize('indexEmployees', User::class);
+
+
         $business = Business::findOrFail($business);
-
-
 
 
         $employees = $business->employees;
 
-        $employees =  DB::table('employees')
-            ->join('contracts', 'contracts.id', '=', 'employees.contract_id')
+
+        $employees =  DB::table('users')
+            ->join('contracts', 'contracts.id', '=', 'users.contract_id')
             ->join('deadlines', 'deadlines.id', '=', 'contracts.deadline_id')
-            ->select('deadlines.*', 'contracts.currency', 'employees.*')
-            ->where('employees.business_id', $business->id)
+            ->select('deadlines.*', 'contracts.currency', 'users.*')
+            ->where('users.business_id', $business->id)
             ->orderBy('end_time')
             ->get();
+
+
 
 
         return view('businessEmployee', compact('business', 'employees'));
@@ -58,6 +60,7 @@ class BusinessManageEmployeesController extends Controller
 
         $business = Business::findOrFail($businessId);
 
+        $this->authorize('createEmployee', User::class);
 
         return view('businessEmployeeCreate', compact('business'));
     }
@@ -76,12 +79,14 @@ class BusinessManageEmployeesController extends Controller
         $business = Business::findOrFail($businessId);
 
 
+        $this->authorize('createEmployee', User::class);
 
 
 
 
-        $_userRoleLevel = auth()->user()->role ?? 10;
-        $_ruleForRole = 'required|integer|min:' . $_userRoleLevel . '|max:10';
+
+
+        $_ruleForRole = 'required|integer|min:' . auth()->user()->role + 1 . '|max:10';
 
         $request->validate([
             'contract_type_id' => 'required',
@@ -90,7 +95,7 @@ class BusinessManageEmployeesController extends Controller
             'hourly_pay' => 'required',
             'role' => $_ruleForRole,
             'name' => 'required',
-            'dateOfBirth' => 'required|date',
+            'birthday' => 'required|date',
         ]);
 
 
@@ -108,15 +113,14 @@ class BusinessManageEmployeesController extends Controller
         $contract->save();
 
 
-        $employee = new Employee;
+        $employee = new User;
         $employee->business_id = $businessId;
         $employee->password = Hash::make('password');
-        $employee->role = $request->role;
-        $employee->email = $request->email;
         $employee->name = $request->name;
         $employee->surname = $request->surname;
+        $employee->role = $request->role;
+        $employee->birthday = $request->birthday;
         $employee->contract_id = $contract->id;
-        $employee->dateOfBirth = $request->dateOfBirth;
         $employee->save();
 
 
@@ -130,17 +134,20 @@ class BusinessManageEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($businessId, Employee $employee)
+    public function show($businessId, User $employee)
     {
-
+        // dd($employee);
         $business = Business::findOrFail($businessId);
 
-        if ($employee->business_id !== $business->id) {
-            abort(404);
-        }
+
+        $contract = $employee->contract;
+        $deadline = $contract->deadline;
 
 
-        return view('businessEmployeeShow', compact(['employee', 'business']));
+
+
+
+        return view('businessEmployeeShow', compact(['employee', 'business', 'contract', 'deadline']));
     }
 
     /**
@@ -157,15 +164,6 @@ class BusinessManageEmployeesController extends Controller
 
 
 
-        if ($business->id !== $employee->business_id) {
-            abort(404);
-        }
-
-
-
-
-
-
         return view('business.employee.editForm', compact('employee', 'businessId'));
     }
 
@@ -176,20 +174,45 @@ class BusinessManageEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $businessId, Employee $employee)
+    public function update(Request $request, $businessId, User $employee)
     {
+
+
         $business = Business::findOrFail($businessId);
 
 
-        if ($business->id !== $employee->business_id) {
-            abort(404);
-        }
+        $contract = $employee->contract;
+        $deadline = $contract->deadline;
+
+        $_ruleForRole = 'required|integer|min:' . auth()->user()->role + 1 . '|max:10';
+
+
+        $request->validate([
+            'contract_type_id' => 'required',
+            'start_time' => 'required|date|before:' . $request->end_time,
+            'end_time' => 'required|date',
+            'hourly_pay' => 'required',
+            'role' => $_ruleForRole,
+            'name' => 'required',
+            'birthday' => 'required|date',
+        ]);
 
 
 
         $employee->name = $request->name;
         $employee->surname = $request->surname;
+        $employee->email_work = $request->email_work;
+        $employee->role = $request->role;
+
+        $contract->hourly_pay = $request->hourly_pay;
+        $contract->currency = $request->currency;
+
+        $deadline->start_time = $request->start_time;
+        $deadline->end_time = $request->end_time;
+
         $employee->save();
+        $contract->save();
+        $deadline->save();
 
         return redirect(route('business.employees.index', $businessId));
     }
@@ -200,7 +223,7 @@ class BusinessManageEmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($businessId, Employee $employee)
+    public function destroy($businessId, User $employee)
     {
 
         $business = Business::findOrFail($businessId);

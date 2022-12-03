@@ -27,6 +27,30 @@
       </div>
 
       <div class="grow">
+        <h5 class="text-xs text-slate-400">{{$columnNames->name_column_5}} :</h5>
+        <h2 class="text-base">
+          <input
+          name="column_5"
+          class=" border-0"
+            type="text"
+            value={{$card->column_5}}
+          />
+        </h2>
+      </div>
+
+      <div class="grow">
+        <h5 class="text-xs text-slate-400">{{$columnNames->name_column_6}} :</h5>
+        <h2 class="text-base">
+          <input
+          name="column_6"
+          class=" border-0"
+            type="text"
+            value={{$card->column_6}}
+          />
+        </h2>
+      </div>
+
+      <div class="grow">
         <h5 class="text-xs text-slate-400">
           {{$columnNames->name_column_1}} :
         </h5>

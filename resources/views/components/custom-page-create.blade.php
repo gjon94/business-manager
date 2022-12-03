@@ -56,7 +56,7 @@
               </div>
 
               <div class="grow w-full sm:w-1/2 md:w-1/4">
-                <h5 class="text-xs text-slate-400">nome colonna 2 :</h5>
+                <h5 class="text-xs text-slate-400">nome colonna 3 :</h5>
                 <h2 class="text-base"> <input
                   name="name_column_3"
                    class=" border-0 border-b focus:ring-0"
@@ -66,7 +66,7 @@
               </div>
 
               <div class="grow w-full sm:w-1/2 md:w-1/4">
-                <h5 class="text-xs text-slate-400">nome colonna 2 :</h5>
+                <h5 class="text-xs text-slate-400">nome colonna 4 :</h5>
                 <h2 class="text-base"> <input
                   name="name_column_4"
                    class=" border-0 border-b focus:ring-0"
@@ -74,6 +74,28 @@
                   placeholder="ulteriore info task"
                 /></h2>
               </div>
+              
+              <div class="grow w-full sm:w-1/2 md:w-1/4">
+                <h5 class="text-xs text-slate-400">nome colonna 5 :</h5>
+                <h2 class="text-base"> <input
+                  name="name_column_5"
+                   class=" border-0 border-b focus:ring-0"
+                  type="text"
+                  placeholder="ulteriore info task"
+                /></h2>
+              </div>
+
+
+              <div class="grow w-full sm:w-1/2 md:w-1/4">
+                <h5 class="text-xs text-slate-400">nome colonna 6 :</h5>
+                <h2 class="text-base"> <input
+                  name="name_column_6"
+                   class=" border-0 border-b focus:ring-0"
+                  type="text"
+                  placeholder="ulteriore info task"
+                /></h2>
+              </div>
+
 
             
 

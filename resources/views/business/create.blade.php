@@ -60,8 +60,8 @@
         <input type="text" name="currency" value="euro">
 
         <br>
-        <label for="dateOfBirth">data di nascita</label>
-        <input type="date" name="dateOfBirth">
+        <label for="birthday">data di nascita</label>
+        <input type="date" name="birthday">
         <br>
         <button type="reset">cancella</button>
         <button type="submit">crea dipendente</button>

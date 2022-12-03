@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('name_column_2', 20)->default('end')->nullable();
             $table->string('name_column_3', 20)->default('name')->nullable();
             $table->string('name_column_4', 20)->default('desc')->nullable();
+            $table->string('name_column_5', 20)->default('desc')->nullable();
+            $table->string('name_column_6', 20)->default('desc')->nullable();
 
             $table->foreign('custom_page_id')
                 ->references('id')

@@ -49,4 +49,9 @@ class Employee extends Authenticatable
     {
         return $this->belongsTo(Business::class, 'business_id');
     }
+
+    public function contract()
+    {
+        return $this->belongsTo(Contract::class);
+    }
 }

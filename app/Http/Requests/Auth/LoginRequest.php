@@ -47,7 +47,7 @@ class LoginRequest extends FormRequest
      */
     public function authenticate()
     {
-        Auth::guard('employee')->logout();
+        Auth::logout();
 
 
         $this->ensureIsNotRateLimited('email');
@@ -67,18 +67,15 @@ class LoginRequest extends FormRequest
     {
 
 
-        if (auth('employee')->user()) {
+        Auth::logout();
 
-            Auth::guard('employee')->logout();
-        } else {
-            Auth::logout();
-        }
+
 
 
 
         $this->ensureIsNotRateLimited('id');
 
-        if (!Auth::guard('employee')->attempt($this->only('id', 'password'), true)) {
+        if (!Auth::attempt($this->only('id', 'password'), true)) {
             RateLimiter::hit($this->throttleKey('id'));
 
 
@@ -86,6 +83,7 @@ class LoginRequest extends FormRequest
                 'id' => trans('auth.failed'),
             ]);
         }
+
 
         RateLimiter::clear($this->throttleKey('id'));
     }

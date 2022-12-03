@@ -13,18 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) {
-            $table->id();
-            $table->string('password');
-            $table->string('email')->default(null)->nullable();
-            $table->unsignedBigInteger('business_id');
-            $table->integer('role')->default(10);
-            $table->unsignedBigInteger('contract_id')->default(1);
-            $table->string('name');
-            $table->string('surname');
-            $table->date('birthday');
-            $table->timestamps();
-            $table->rememberToken();
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('business_id')->nullable()->default(null);
+            $table->unsignedBigInteger('contract_id')->nullable()->default(null);
+
             $table->foreign('business_id')
                 ->references('id')
                 ->on('businesses');
@@ -42,6 +34,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employees');
+
+        Schema::dropColumns('users', ['business_id', 'contract_id']);
     }
 };

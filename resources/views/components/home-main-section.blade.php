@@ -11,8 +11,24 @@
         >
         <h1 class="font-bold text-2xl text-blue-800 mb-5">Scadenze:</h1>
         <div class="flex flex-col gap-2">
+          <!--display errores -->
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              <ul>
+                 @foreach ($errors->all() as $error)
+                 <li><h5 class="text-2l text-red-700">{{ $error }}</h5></li>
+                 @endforeach
+               </ul>
+            </div>
+         @endif
+
+          <!-- -->
+
           @forelse ($deadlines as $deadline)
           <x-main-section-components.deadline :deadline="$deadline"></x-main-section-components.deadline>
+
+
+
           @empty
               <h1 class="text-2xl">Non ci sono scadenza </h1>
           
@@ -33,44 +49,17 @@
           <div class="mb-5">
             <h1 class="font-bold text-2xl text-blue-800">
               Aggiornamenti aziendali
+               <!-- create post form -->
+            <x-main-section-components.post-form></x-main-section-components.post-form>
             </h1>
           </div>
           <div class="grow flex flex-col gap-3">
-            <article class="bg-white border rounded-lg shadow-md">
-              <!-- cont img name options posts-->
-              <div
-                class="flex justify-between h-[5rem] p-3 lg:h-[3rem] lg:p-1"
-              >
-                <div class="flex">
-                  <!-- img -->
-                  <div class="h-[inherit] rounded-full overflow-hidden">
-                    <img
-                      class="h-[100%] object-cover aspect-square"
-                      src="https://www.mantotman.nl/files/styles/tile_small/public/2022-07/66196689_s.jpg?h=b44d6655&itok=26vViPPW"
-                      alt=""
-                    />
-                  </div>
-                  <!-- name and date-->
-                  <div class="ml-3">
-                    <h1 class="text-xl">carlo</h1>
-                    <h4 class="text-xs text-cyan-700">13:30 28/05/23</h4>
-                  </div>
-                </div>
-                <!-- option post-->
-                <button>opzioni</button>
-              </div>
-
-              <a href="">
-                <div class="p-3">
-                  <p class="text-xs">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing
-                    elit. Voluptatem nemo ad est, cupiditate officia totam
-                    assumenda pariatur vitae omnis quod eveniet qui corporis
-                    incidunt! Iure ipsam mollitia explicabo earum vero.
-                  </p>
-                </div>
-              </a>
-            </article>
+           
+            @foreach ($posts as $post)
+            <x-main-section-components.post-card :post="$post"></x-main-section-components.post-card>
+                
+            @endforeach
+            
           </div>
         </div>
         <!-- end business internal news -->

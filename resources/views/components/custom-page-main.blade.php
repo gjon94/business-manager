@@ -48,6 +48,16 @@
                 <label class="text-xs text-slate-400 absolute left-1 top-1" for="column_4">{{$columnNames->name_column_4}}</label>
               <input type="text" name="column_4" class="pt-4">
               </div>
+
+              <div class="flex flex-col relative">
+                <label class="text-xs text-slate-400 absolute left-1 top-1" for="column_5">{{$columnNames->name_column_5}}</label>
+              <input type="text" name="column_5" class="pt-4">
+              </div>
+
+              <div class="flex flex-col relative">
+                <label class="text-xs text-slate-400 absolute left-1 top-1" for="column_6">{{$columnNames->name_column_6}}</label>
+              <input type="text" name="column_6" class="pt-4">
+              </div>
               
               <div>
                 <button class="border rounded bg-green-400 p-2 px-5 text-1xl" type="submit">crea</button>

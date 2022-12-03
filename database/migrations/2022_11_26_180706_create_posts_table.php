@@ -13,25 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('password');
-            $table->string('email')->default(null)->nullable();
             $table->unsignedBigInteger('business_id');
-            $table->integer('role')->default(10);
-            $table->unsignedBigInteger('contract_id')->default(1);
-            $table->string('name');
-            $table->string('surname');
-            $table->date('birthday');
+            $table->unsignedBigInteger('user_id');
+            $table->string('title', 30);
+            $table->string('body', 200);
             $table->timestamps();
-            $table->rememberToken();
+
             $table->foreign('business_id')
                 ->references('id')
-                ->on('businesses');
+                ->on('businesses')
+                ->onDelete('cascade');
 
-            $table->foreign('contract_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('contracts');
+                ->on('users');
         });
     }
 
@@ -42,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('posts');
     }
 };

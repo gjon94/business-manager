@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Business;
-
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -38,17 +38,20 @@ class BusinessController extends Controller
         order by custom_tables.column_2 "));
 
 
-        $employeeDeadlines = DB::select(DB::raw("select employees.id as employeeId,employees.business_id as businessId,name ,surname,deadlines.end_time from employees
-        inner join contracts on contracts.id = employees.contract_id
-        inner join deadlines on deadlines.id = contracts.deadline_id
-        
-        where employees.business_id = $business->id 
 
 
-        order by deadlines.end_time"));
+
+        $deadlines = [...$customPagesDeadlines];
 
 
-        $deadlines = [...$customPagesDeadlines, ...$employeeDeadlines];
+
+
+        $posts =  DB::table('posts')
+            ->join('users', 'posts.user_id', '=', 'users.id')
+            ->select('posts.*', 'users.name')
+            ->orderByDesc('created_at')
+            ->limit(3)
+            ->get();
 
 
 
@@ -60,6 +63,6 @@ class BusinessController extends Controller
 
 
 
-        return view('businessHome', compact('business', 'deadlines'));
+        return view('businessHome', compact('business', 'deadlines', 'posts'));
     }
 }

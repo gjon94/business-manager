@@ -20,6 +20,8 @@ return new class extends Migration
             $table->date('column_2')->nullable();
             $table->string('column_3', 20)->nullable();
             $table->string('column_4', 20)->nullable();
+            $table->string('column_5', 20)->nullable();
+            $table->string('column_6', 20)->nullable();
 
             $table->foreign('custom_page_id')
                 ->references('id')

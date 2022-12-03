@@ -13,9 +13,11 @@
 
             <div class="flex flex-col gap-2 mt-5">
 
-                  @foreach ($business->employees as $employee)
+                  @foreach ($employees as $employee)
                   <x-main-section-components.employee-card :employee="$employee" :businessId="$business->id"></x-main-section-components.employee-card>
                   @endforeach
+                  
+                 
                   
                   
                   

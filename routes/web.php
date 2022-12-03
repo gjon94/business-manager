@@ -7,6 +7,7 @@ use App\Http\Controllers\BusinessManageEmployeesController;
 use App\Http\Controllers\CustomPageController;
 use App\Http\Controllers\CustomTableControler;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -27,45 +28,18 @@ Route::get('/', function () {
 });
 
 
-Route::get('/prova', function () {
-
-    return view('prova');
-});
-
-Route::get('/ddd', function () {
-
-    $customPagesDeadlines = DB::select(DB::raw('select businesses.id as businessId, custom_pages.id as customPageId,custom_pages.name as customPageName ,
-        custom_tables.column_2 as end_time,custom_tables.column_3,column_names.name_column_3 from businesses
-        
-        inner join custom_pages on custom_pages.business_id = businesses.id
-        inner join custom_tables on custom_tables.custom_page_id = custom_pages.id
-        inner join column_names on column_names.custom_page_id = custom_pages.id
-        
-        
-        where businesses.id = 1 and custom_tables.column_2 is not null
-         
-        
-        order by custom_tables.column_2 '));
 
 
-    $employeeDeadlines = DB::select(DB::raw('select employees.id as userId,name ,surname,deadlines.end_time from employees
-        inner join contracts on contracts.id = employees.contract_id
-        inner join deadlines on deadlines.id = contracts.deadline_id
-        
-        order by deadlines.end_time'));
-
-    return [$customPagesDeadlines, $employeeDeadlines];
-});
 
 
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth', 'IsOwner'])->name('dashboard');
 
 // Rotte che ad utente loggato faranno accedere alle proprie aziende ed modificarle
 
-Route::resource('/business-manage', BusinessManageController::class);
+Route::resource('/business-manage', BusinessManageController::class)->middleware('IsOwner');
 
 
 
@@ -74,6 +48,11 @@ Route::prefix('businesses/{business}')->name('business.')->middleware(['auth', '
     //Homepage of interiors business'employees
 
     Route::get('/homepage', [BusinessController::class, 'homepage'])->name('homepage');
+
+
+    //INTERNAL POSTS
+    Route::resource('/posts', PostController::class);
+
 
     // manage employees
     Route::resource('/employees', BusinessManageEmployeesController::class);
@@ -98,5 +77,8 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('/login', [LoginEmployee::class, 'create'])->name('login');
     Route::post('/loginPost', [LoginEmployee::class, 'store'])->name('store');
 });
+
+
+
 
 require __DIR__ . '/auth.php';
