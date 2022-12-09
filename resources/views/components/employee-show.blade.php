@@ -96,7 +96,7 @@
                  name="start_time"
                  class=" border-0 border-b focus:ring-0"
                    type="date"
-                   value={{$deadline->start_time}}
+                   value={{$contract->start_time}}
                  />
                </h2>
              </div>
@@ -112,7 +112,7 @@
                  name="end_time"
                  class=" border-0 border-b focus:ring-0"
                    type="date"
-                   value={{$deadline->end_time}}
+                   value={{$contract->end_time}}
                  />
                </h2>
              </div>

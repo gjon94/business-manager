@@ -19,9 +19,10 @@ return new class extends Migration
             $table->unsignedBigInteger('deadline_id')->nullable();
             $table->integer('hourly_pay')->default(0);
             $table->string('currency')->default('euro');
-
+            $table->date('start_time')->nullable();
+            $table->date('end_time')->nullable();
             $table->foreign('contract_type_id')->references('id')->on('contract_types');
-            $table->foreign('deadline_id')->references('id')->on('deadlines');
+            // $table->foreign('deadline_id')->references('id')->on('deadlines');
         });
     }
 

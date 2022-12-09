@@ -22,11 +22,30 @@
           <div
             class="h-[100%] border rounded-full overflow-hidden shadow-lg"
           >
+          @switch(auth()->user()->type)
+              @case('owner')
+                   <a class="h-[inherit]" href="{{route('dashboard')}}">
             <img
               class="object-cover h-[inherit] aspect-square"
               src="https://cdn.gingergeneration.it/uploads/2020/08/jisoo.jpg"
               alt="user-profile-photo"
             />
+          </a>
+                  @break
+              @case('employee')
+              <a class="h-[inherit]" href="{{route('employee.login')}}">
+                <img
+                  class="object-cover h-[inherit] aspect-square"
+                  src="https://cdn.gingergeneration.it/uploads/2020/08/jisoo.jpg"
+                  alt="user-profile-photo"
+                />
+              </a>
+                  @break
+              @default
+                  
+          @endswitch
+         
+            
           </div>
 
           <div class="grow flex flex-col justify-center">

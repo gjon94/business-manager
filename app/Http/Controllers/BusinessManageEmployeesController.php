@@ -34,16 +34,25 @@ class BusinessManageEmployeesController extends Controller
 
         $employees = $business->employees;
 
+        // dd($employees);
+
+        // $employees =  DB::table('users')
+        //     ->join('contracts', 'contracts.id', '=', 'users.contract_id')
+        //     ->join('deadlines', 'deadlines.id', '=', 'contracts.deadline_id')
+        //     ->select('deadlines.*', 'contracts.currency', 'users.*')
+        //     ->where('users.business_id', $business->id)
+        //     ->orderBy('end_time')
+        //     ->get();
 
         $employees =  DB::table('users')
             ->join('contracts', 'contracts.id', '=', 'users.contract_id')
-            ->join('deadlines', 'deadlines.id', '=', 'contracts.deadline_id')
-            ->select('deadlines.*', 'contracts.currency', 'users.*')
+
+            ->select('contracts.*', 'users.*')
             ->where('users.business_id', $business->id)
             ->orderBy('end_time')
             ->get();
 
-
+        // dd($employees);
 
 
         return view('businessEmployee', compact('business', 'employees'));
@@ -100,16 +109,14 @@ class BusinessManageEmployeesController extends Controller
 
 
 
-        $deadline = new Deadline();
-        $deadline->start_time = $request->start_time;
-        $deadline->end_time = $request->end_time;
-        $deadline->save();
+
 
         $contract = new Contract();
         $contract->contract_type_id = $request->contract_type_id;
-        $contract->deadline_id = $deadline->id;
         $contract->hourly_pay = $request->hourly_pay;
         $contract->currency = $request->currency;
+        $contract->start_time = $request->start_time;
+        $contract->end_time = $request->end_time;
         $contract->save();
 
 
@@ -123,7 +130,7 @@ class BusinessManageEmployeesController extends Controller
         $employee->contract_id = $contract->id;
         $employee->save();
 
-
+        // dd($employee);
 
         return redirect(route('business.employees.index', $businessId));
     }
@@ -141,13 +148,13 @@ class BusinessManageEmployeesController extends Controller
 
 
         $contract = $employee->contract;
-        $deadline = $contract->deadline;
 
 
 
 
 
-        return view('businessEmployeeShow', compact(['employee', 'business', 'contract', 'deadline']));
+
+        return view('businessEmployeeShow', compact(['employee', 'business', 'contract']));
     }
 
     /**
@@ -182,7 +189,7 @@ class BusinessManageEmployeesController extends Controller
 
 
         $contract = $employee->contract;
-        $deadline = $contract->deadline;
+
 
         $_ruleForRole = 'required|integer|min:' . auth()->user()->role + 1 . '|max:10';
 
@@ -207,12 +214,12 @@ class BusinessManageEmployeesController extends Controller
         $contract->hourly_pay = $request->hourly_pay;
         $contract->currency = $request->currency;
 
-        $deadline->start_time = $request->start_time;
-        $deadline->end_time = $request->end_time;
+        $contract->start_time = $request->start_time;
+        $contract->end_time = $request->end_time;
 
         $employee->save();
         $contract->save();
-        $deadline->save();
+
 
         return redirect(route('business.employees.index', $businessId));
     }

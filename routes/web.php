@@ -34,7 +34,9 @@ Route::get('/', function () {
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $business = auth()->user()->business;
+
+    return view('ownerProfile', compact('business'));
 })->middleware(['auth', 'IsOwner'])->name('dashboard');
 
 // Rotte che ad utente loggato faranno accedere alle proprie aziende ed modificarle

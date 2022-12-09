@@ -10,7 +10,7 @@
           name="column_3"
            class=" border-0"
           type="text"
-          value={{$card->column_3}}
+          value="{{$card->column_3}}"
         /></h2>
       </div>
 
@@ -21,7 +21,7 @@
           name="column_4"
           class=" border-0"
             type="text"
-            value={{$card->column_4}}
+            value="{{$card->column_4}}"
           />
         </h2>
       </div>
@@ -33,7 +33,7 @@
           name="column_5"
           class=" border-0"
             type="text"
-            value={{$card->column_5}}
+            value="{{$card->column_5}}"
           />
         </h2>
       </div>
@@ -45,7 +45,7 @@
           name="column_6"
           class=" border-0"
             type="text"
-            value={{$card->column_6}}
+            value="{{$card->column_6}}"
           />
         </h2>
       </div>
@@ -59,7 +59,7 @@
           name="column_1"
           class=" border-0"
             type="date"
-            value= {{$card->column_1}}
+            value="{{$card->column_1}}"
           />
         </h2>
       </div>
@@ -73,7 +73,7 @@
           name="column_2"
           class=" border-0"
             type="date"
-            value= {{$card->column_2}}
+            value="{{$card->column_2}}"
           />
         </h2>
       </div>

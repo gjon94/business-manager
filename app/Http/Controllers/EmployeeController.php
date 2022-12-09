@@ -10,9 +10,10 @@ class EmployeeController extends Controller
     public function index()
     {
 
+        $business = auth()->user()->getMyCompany;
 
 
 
-        dd('emmplye index');
+        return view('employeeProfile', compact('business'));
     }
 }

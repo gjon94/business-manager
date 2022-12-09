@@ -15,7 +15,7 @@
                  name="name"
                   class=" border-0 border-b focus:ring-0"
                  type="text"
-                 value={{$customPage->name}}
+                 value="{{$customPage->name}}"
                /></h2>
              </div>
     
@@ -26,7 +26,7 @@
                   name="description"
                    class=" border-0 border-b focus:ring-0"
                   type="text"
-                  value={{$customPage->description}}
+                  value="{{$customPage->description}}"
                 /></h2>
               </div>
 
@@ -40,7 +40,7 @@
                   name="name_column_1"
                    class=" border-0 border-b focus:ring-0"
                   type="text"
-                  value={{$columnNames->name_column_1}}
+                  value="{{$columnNames->name_column_1}}"
                 /></h2>
               </div>
 
@@ -50,48 +50,48 @@
                   name="name_column_2"
                    class=" border-0 border-b focus:ring-0"
                   type="text"
-                  value={{$columnNames->name_column_2}}
+                  value="{{$columnNames->name_column_2}}"
                 /></h2>
               </div>
 
               <div class="grow w-full sm:w-1/2 md:w-1/4">
-                <h5 class="text-xs text-slate-400">nome colonna 2 :</h5>
+                <h5 class="text-xs text-slate-400">nome colonna 3 :</h5>
                 <h2 class="text-base"> <input
                   name="name_column_3"
                    class=" border-0 border-b focus:ring-0"
                   type="text"
-                  value={{$columnNames->name_column_3}}
+                  value="{{$columnNames->name_column_3}}"
                 /></h2>
               </div>
 
               <div class="grow w-full sm:w-1/2 md:w-1/4">
-                <h5 class="text-xs text-slate-400">nome colonna 2 :</h5>
+                <h5 class="text-xs text-slate-400">nome colonna 4 :</h5>
                 <h2 class="text-base"> <input
                   name="name_column_4"
                    class=" border-0 border-b focus:ring-0"
                   type="text"
-                  value={{$columnNames->name_column_4}}
+                  value="{{$columnNames->name_column_4}}"
                 /></h2>
               </div>
 
               <div class="grow w-full sm:w-1/2 md:w-1/4">
-                <h5 class="text-xs text-slate-400">nome colonna 2 :</h5>
+                <h5 class="text-xs text-slate-400">nome colonna 5 :</h5>
                 <h2 class="text-base"> <input
                   name="name_column_5"
                    class=" border-0 border-b focus:ring-0"
                   type="text"
-                  value={{$columnNames->name_column_5}}
+                  value="{{$columnNames->name_column_5}}"
                 /></h2>
               </div>
 
 
               <div class="grow w-full sm:w-1/2 md:w-1/4">
-                <h5 class="text-xs text-slate-400">nome colonna 2 :</h5>
+                <h5 class="text-xs text-slate-400">nome colonna 6 :</h5>
                 <h2 class="text-base"> <input
                   name="name_column_6"
                    class=" border-0 border-b focus:ring-0"
                   type="text"
-                  value={{$columnNames->name_column_6}}
+                  value="{{$columnNames->name_column_6}}"
                 /></h2>
               </div>
 

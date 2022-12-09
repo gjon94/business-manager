@@ -10,7 +10,7 @@
         class="border bg-white p-3 grow lg:overflow-hidden lg:overflow-y-scroll"
         >
         <h1 class="font-bold text-2xl text-blue-800 mb-5">Scadenze:</h1>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 container-cards">
           <!--display errores -->
           @if ($errors->any())
             <div class="alert alert-danger">
@@ -34,6 +34,7 @@
           
           @endforelse
           
+         <script  src="{{ Vite::asset('resources/js/colorCard.js') }}"></script>
           
         </div>
       </div>
